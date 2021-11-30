@@ -11,5 +11,8 @@
   "license": "ISC",
   "devDependencies": {
     "electron": "^8.5.5"
+  },
+  "dependencies": {
+    "mysql": "^2.18.1"
   }
 }

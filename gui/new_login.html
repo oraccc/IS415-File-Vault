@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1 id="name">Hello</h1>
+    <h3>It is your first time login, please set your password!</h3>
+    <p>
+        set password <input type="test" id="set_password">
+    </p>
+    <button type="button" onclick="set_password()"> set </button>
+</body>
+
+<script>
+    var username = document.getElementById("name");
+
+    var os = require('os');
+    username.innerHTML = "Hello " + os.userInfo().username;
+
+    function set_password() {
+        var mysql = require('mysql');
+        var connection = mysql.createConnection({
+            host: 'localhost',
+            user: 'root',
+            password: '123456',
+            database: 'test'
+        });
+
+        connection.connect();
+
+        var pwd = document.getElementById('set_password').value;
+        var sql = "insert into user (name, password) values (\"" + os.userInfo().username + "\", \"" + pwd + "\");";
+        console.log(sql);
+
+        connection.query(sql, function (error, results, fields) {
+            if (error) throw error;
+
+            window.location.href="home.html";
+        });
+    }
+</script>
+
+</html>
