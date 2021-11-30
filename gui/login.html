@@ -17,38 +17,6 @@
     <button type="button" onclick="login()"> login </button>
 </body>
 
-<script>
-    var username = document.getElementById("name");
-
-    var os = require('os');
-    username.innerHTML = "Hello " + os.userInfo().username;
-
-    function login() {
-        var mysql = require('mysql');
-        var connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: '123456',
-            database: 'test'
-        });
-
-        connection.connect();
-
-        var sql = "select * from user where name = \"" + os.userInfo().username + "\"";
-        var pwd = document.getElementById('password').value;
-
-        connection.query(sql, function (error, results, fields) {
-            if (error) throw error;
-
-            console.log(results[0]["password"]);
-            if (results[0]["password"] === pwd) {
-                window.location.href="home.html";
-            } else {
-                alert("pwd wrong");
-            }
-        });
-        connection.realease();
-    }
-</script>
+<script src="./render/login,js"></script>
 
 </html>
