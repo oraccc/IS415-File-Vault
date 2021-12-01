@@ -12,6 +12,12 @@ function show_dir(path) {
 
     var html = "";
 
+    if(path === rel_path && content.length ===0){
+        html = "<div>Your vault is empty!</div>";
+        list.innerHTML = html;
+        return;
+    }
+
     var path_tmp = path;
 
     content.forEach((v, i) => {
