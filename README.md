@@ -12,7 +12,7 @@ cd gui
 npm install --save-dev electron@^8.5.5
 ```
 
-#### If you have encountered some installation problems caused by network connections, try following steps to complete the installation progress:)
+> If you have encountered some installation problems caused by network connections, try following steps to complete the installation progress :)
 
 ```bash
 cd node_modules/electron
