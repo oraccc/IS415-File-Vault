@@ -1,10 +1,10 @@
 .login_panel{
     display: block;
     position: fixed;
-    top: 20%;
+    top: 15%;
     left: 30%;
     width: 40%;
-    height: 60%;
+    height: 70%;
     background: rgba(255, 255, 255, 0.6);
     z-index: 10;
     border-radius: 10px;
@@ -16,7 +16,9 @@
     height: 40px;
     font-size: 18px;
     font-weight: 700;
-    background-color: palegoldenrod;
+    color: white;
+    background-color: rgb(29, 161, 242);
+    border: rgb(29, 161, 242);
     border-radius: 7px;
 }
 
@@ -33,6 +35,11 @@
 .gap-20 {
     clear:both;
     height: 20px;
+}
+
+.gap-30 {
+    clear:both;
+    height: 30px;
 }
 
 .gap-40 {

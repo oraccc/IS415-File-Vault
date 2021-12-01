@@ -12,22 +12,25 @@
 
 <body background="./static/img/blur_background.jpg">
     <div class="login_panel">
-        <h1 style="text-align: center;">Welcome</h1>
-        <h3 style="text-align: center; margin: auto 40px auto;">Please Enter Your Password to Access File Vault</h3>
+        <div style="text-align: center;">
+            <img src="./static/img/logo.png" width="250px"/>
+        </div>
+        <h1 style="text-align: center; color: dimgray; margin-top: 0px;">Welcome Back</h1>
+        <h3 style="text-align: center; color: dimgray; margin: auto 40px auto;">Please Enter Your Password to Access File Vault</h3>
         <div class="gap-20"></div>
         <div style="text-align: center;">
             <input style="width: 220px; height: 22px; border-radius: 1px; text-align: center; font-size: 16px; font-weight: bolder;" type="text" id="name" readonly>
             <div class="gap-2"></div>
             <input style="width: 220px; height: 22px; border-radius: 1px; text-align: center; font-size: 16px;" type="password" id="password" placeholder="password">
         </div>
-        <div class="gap-40"></div>
+        <div class="gap-30"></div>
         <div class="btns" style="text-align: center;">
-            <input type="button" onclick="login()" value="login">
+            <input type="button" onclick="login()" value="Login">
         </div>
     </div>
     
 </body>
 
-<script src="./render/login,js"></script>
+<script src="./render/login.js"></script>
 
 </html>

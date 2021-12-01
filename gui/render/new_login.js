@@ -2,7 +2,7 @@ var fs = require('fs');
 
 var os = require('os');
 var username = document.getElementById("name");
-username.innerHTML = "Hello " + os.userInfo().username;
+username.value = os.userInfo().username;
 
 function set_password() {
     var mysql = require('mysql');
