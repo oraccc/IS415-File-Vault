@@ -19,8 +19,8 @@ connection.connect();
 
 app.on("ready", () => {
     mainWindow = new BrowserWindow({
-        width: 1400,
-        height: 800,
+        width: 800,
+        height: 600,
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
