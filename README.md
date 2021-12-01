@@ -2,7 +2,7 @@
 
 ## Intall
 
-### gui
+### GUI
 
 Use [electron](https://www.electronjs.org/).
 
@@ -12,7 +12,14 @@ cd gui
 npm install --save-dev electron@^8.5.5
 ```
 
-Init  database mysql.
+#### If you have encountered some installation problems caused by network connections, try following steps to complete the installation progress:)
+
+```bash
+cd node_modules/electron
+node install.js
+```
+
+### Init Database Mysql.
 
 ```bash
 sudo apt install mysql-server
@@ -40,7 +47,7 @@ mysql -u root -p
 > exit;
 ```
 
-start gui.
+### start gui.
 
 ```bash
 npm start
