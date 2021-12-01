@@ -36,7 +36,7 @@ sudo /etc/init.d/mysql restart
 mysql -u root -p
 > create database test;
 > use test;
-> create table (name varchar(100) not null, password varchar(100) not null);
+> create table user (name varchar(100) not null, password varchar(100) not null);
 > exit;
 ```
 
