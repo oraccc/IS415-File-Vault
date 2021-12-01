@@ -2,7 +2,7 @@
 
 ## Intall
 
-### gui
+### GUI
 
 Use [electron](https://www.electronjs.org/).
 
@@ -12,7 +12,14 @@ cd gui
 npm install --save-dev electron@^8.5.5
 ```
 
-Init  database mysql.
+> If you have encountered some installation problems caused by network connections, try following steps to complete the installation progress :)
+
+```bash
+cd node_modules/electron
+node install.js
+```
+
+### Init Database Mysql.
 
 ```bash
 sudo apt install mysql-server
@@ -25,7 +32,7 @@ sudo netstat -tap | grep mysql
 # set the password of the user “root”
 sudo su
 mysql
-> update mysql.user set authentication_string=PASSWORD("123456"), plugin=‘mysql_native_password’ where user="root";
+> update mysql.user set authentication_string=PASSWORD("123456"), plugin="mysql_native_password" where user="root";
 > flush privileges;
 > exit;
 
@@ -36,11 +43,11 @@ sudo /etc/init.d/mysql restart
 mysql -u root -p
 > create database test;
 > use test;
-> create table (name varchar(100) not null, password varchar(100) not null);
+> create table user (name varchar(100) not null, password varchar(100) not null);
 > exit;
 ```
 
-start gui.
+### start gui.
 
 ```bash
 npm start
@@ -48,4 +55,4 @@ npm start
 
 ### krnl
 
-****************
+

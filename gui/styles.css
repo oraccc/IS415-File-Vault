@@ -1,0 +1,41 @@
+.login_panel{
+    display: block;
+    position: fixed;
+    top: 20%;
+    left: 30%;
+    width: 40%;
+    height: 60%;
+    background: rgba(255, 255, 255, 0.6);
+    z-index: 10;
+    border-radius: 10px;
+    box-shadow: 0 0 5px gray;
+}
+
+.btns input {
+    width: 80px;
+    height: 40px;
+    font-size: 18px;
+    font-weight: 700;
+    background-color: palegoldenrod;
+    border-radius: 7px;
+}
+
+.gap-2 {
+    clear:both;
+    height: 2px;
+}
+
+.gap-10 {
+    clear:both;
+    height: 10px;
+}
+
+.gap-20 {
+    clear:both;
+    height: 20px;
+}
+
+.gap-40 {
+    clear:both;
+    height: 40px;
+}

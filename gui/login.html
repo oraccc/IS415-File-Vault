@@ -5,16 +5,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+    <title>Encrypted File Vault System ~ Login Page</title>
 </head>
 
-<body>
-    <h1 id="name">Hello</h1>
-    <h3>Please enter your password!</h3>
-    <p>
-        password <input type="test" id="password">
-    </p>
-    <button type="button" onclick="login()"> login </button>
+<body background="./static/img/blur_background.jpg">
+    <div class="login_panel">
+        <h1 style="text-align: center;">Welcome</h1>
+        <h3 style="text-align: center; margin: auto 40px auto;">Please Enter Your Password to Access File Vault</h3>
+        <div class="gap-20"></div>
+        <div style="text-align: center;">
+            <input style="width: 220px; height: 22px; text-align: center; font-size: 16px; font-weight: bolder;" type="text" id="name" readonly>
+            <div class="gap-2"></div>
+            <input style="width: 220px; height: 22px; text-align: center; font-size: 16px;" type="password" id="password" placeholder="password">
+        </div>
+        <div class="gap-40"></div>
+        <div class="btns" style="text-align: center;">
+            <input type="button" onclick="login()" value="login">
+        </div>
+    </div>
+    
 </body>
 
 <script src="./render/login,js"></script>

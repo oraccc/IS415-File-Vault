@@ -1,7 +1,7 @@
 var username = document.getElementById("name");
 
 var os = require('os');
-username.innerHTML = "Hello " + os.userInfo().username;
+username.value = os.userInfo().username;
 
 function login() {
     var mysql = require('mysql');
