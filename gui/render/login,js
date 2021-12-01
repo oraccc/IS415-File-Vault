@@ -27,5 +27,4 @@ function login() {
             alert("pwd wrong");
         }
     });
-    connection.realease();
 }

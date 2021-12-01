@@ -22,9 +22,9 @@ function set_password() {
     connection.query(sql, function (error, results, fields) {
         if (error) throw error;
 
-        var pwd = "/home/" + os.userInfo().username + "/vault";
+        var path = "/home/" + os.userInfo().username + "/vault";
 
-        fs.mkdir(pwd, { recursive: true }, (err) => {
+        fs.mkdir(path, { recursive: true }, (err) => {
             if (err) throw err;
           });
 

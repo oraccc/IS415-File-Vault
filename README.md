@@ -4,7 +4,7 @@
 
 ### GUI
 
-Use [electron](https://www.electronjs.org/).
+* Use [electron](https://www.electronjs.org/)
 
 ```bash
 sudo apt-get install nodejs npm
@@ -19,7 +19,7 @@ cd node_modules/electron
 node install.js
 ```
 
-### Init Database Mysql.
+* Init Database Mysql
 
 ```bash
 sudo apt install mysql-server
@@ -47,12 +47,10 @@ mysql -u root -p
 > exit;
 ```
 
-### start gui.
+* start gui
 
 ```bash
 npm start
 ```
 
-### krnl
-
-
+### Kernel
