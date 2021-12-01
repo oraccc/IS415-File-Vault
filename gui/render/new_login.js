@@ -1,6 +1,7 @@
-var username = document.getElementById("name");
+var fs = require('fs');
 
 var os = require('os');
+var username = document.getElementById("name");
 username.innerHTML = "Hello " + os.userInfo().username;
 
 function set_password() {
@@ -20,6 +21,12 @@ function set_password() {
 
     connection.query(sql, function (error, results, fields) {
         if (error) throw error;
+
+        var pwd = "/home/" + os.userInfo().username + "/vault";
+
+        fs.mkdir(pwd, { recursive: true }, (err) => {
+            if (err) throw err;
+          });
 
         window.location.href = "home.html";
     });
