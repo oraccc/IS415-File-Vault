@@ -25,7 +25,7 @@ sudo netstat -tap | grep mysql
 # set the password of the user “root”
 sudo su
 mysql
-> update mysql.user set authentication_string=PASSWORD("123456"), plugin=‘mysql_native_password’ where user="root";
+> update mysql.user set authentication_string=PASSWORD("123456"), plugin="mysql_native_password" where user="root";
 > flush privileges;
 > exit;
 
