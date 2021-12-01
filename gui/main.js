@@ -28,6 +28,8 @@ app.on("ready", () => {
         },
     });
 
+    mainWindow.webContents.openDevTools();
+
     var sql = "select * from user where name = \"" + username + "\"";
 
     connection.query(sql, function (error, results, fields) {
