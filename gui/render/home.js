@@ -3,7 +3,7 @@ var os = require('os');
 
 var root_path = "/home/" + os.userInfo().username + "/vault";
 var rel_path = "/";
-var curren_path = rel_path;
+var current_path = rel_path;
 var list = document.getElementById("list");
 
 show_dir("/");
@@ -13,12 +13,15 @@ update_file_click();
 function show_dir(path) {
     let content = fs.readdirSync(root_path + path, { withFileTypes: true });
 
-    curren_path = path;
+    current_path = path;
 
     var html = "";
 
     if (path === rel_path && content.length === 0) {
-        html = "<div>Your vault is empty!</div>";
+        html = "<div style='margin-top:20px; text-align: center; font-weight:bold;font-size:20px;color:dimgrey;'>\
+                    <div>Your Vault is Empty!</div>\
+                </div>"
+
         list.innerHTML = html;
         return;
     }
@@ -31,18 +34,20 @@ function show_dir(path) {
         Reflect.ownKeys(v).forEach(function (name) {
             arr.push(v[name]);
         });
-
+        console.log(root_path + current_path);
         if (arr[1] === 2) {
+
             path_tmp = path + arr[0] + "/";
             html = html +
-                    "<div class='item' name = '" + path_tmp + "'style='text-align:center;'> \
-                            <a  href=\"javascript:show_dir('" + path_tmp + "');\"> \
-                            <img src='./static/img/logos/logo_folder.png' width='100%'/>\
-                            <br>" + arr[0] + 
-                            "</a>\
-                    </div>";
+                "<div class='folder' name = '" + path_tmp + "'style='text-align:center;'> \
+                    <a  href=\"javascript:show_dir('" + path_tmp + "');\"> \
+                        <img src='./static/img/logos/logo_folder.png' width='100%'/>\
+                        <br>" + arr[0] + 
+                    "</a>\
+                </div>";
 
-        } else {
+        } 
+        else {
             postfix = arr[0].split('.')[1];
             var logo_name = ""
             switch(postfix){
@@ -79,13 +84,12 @@ function show_dir(path) {
             };
             path_tmp = path + arr[0];
             html = html +
-            "<div class='item' name = '" + path_tmp + "'style='text-align:center;'> \
+                "<div class='file' name = '" + path_tmp + "'style='text-align:center;'> \
                     <a  href=\"javascript:show_content('" + path_tmp + "');\"> \
-                    <img src='./static/img/logos/logo_" + logo_name + ".png' width='80%'/>\
-                    <br>" + arr[0] + 
+                        <img src='./static/img/logos/logo_" + logo_name + ".png' width='80%'/>\
+                        <br>" + arr[0] + 
                     "</a>\
-            </div>";
-            // html = html + "<div class='file' name='" + path_tmp +"'>file: <a href=\"javascript:show_content('" + path_tmp + "');\">" + arr[0] + "</a></div>";
+                </div>";
         }
 
     });
@@ -105,14 +109,21 @@ function show_dir(path) {
 function show_content(path) {
     const data = fs.readFileSync(root_path + path, 'utf8');
 
-    var html = "<div style='white-space: pre-line;'>" + data + "</div>";
+    var html = "<div style='text-align:center;margin-top:10px;color:dodgerblue;\
+               font-weight:900;font-size:22px;'>FILE CONTENT</div><hr> \
+               <div style='white-space:pre-line;color:rgb(54,54,54);text-align:left;margin:10px 30px 10px;font-weight:600;font-size:17px;'>" + data + 
+               "</div>";
 
     list.innerHTML = html;
 
     if (path !== rel_path) {
         path = path.slice(0, path.lastIndexOf("/") + 1);
 
-        html = html + "<br><div><a href=\"javascript:show_dir('" + path + "');\">back</a></div>";
+        html = html + "<hr>\
+                      <a style='font-size:20px;margin-left:570px;' href=\"javascript:show_dir('" + path + "');\">\
+                      <i class='fa fa-arrow-circle-left' style='font-size:30px;margin-bottom:30px;'></i>\
+                      Back\
+                      </a>";
     }
 
     list.innerHTML = html;

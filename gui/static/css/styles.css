@@ -1,3 +1,13 @@
+hr {
+    margin-top:7px;
+    *margin: 0;
+    border: 0;
+    color: rgb(4, 0, 235);
+    background-color: rgb(29, 161, 242);
+    height: 2px;
+    width:630px;
+}
+
 a:link {
     color:dimgray;
     font-size: 17px;
@@ -59,7 +69,7 @@ a:active {
     box-shadow: 0 0 10px gray inset;
 }
 
-.item{
+.folder{
     display: block;
     width: 10%;
     height: 80px;
@@ -68,6 +78,17 @@ a:active {
     margin-left: 40px;
     margin-top: 25px;
 }
+
+.file{
+    display: block;
+    width: 10%;
+    height: 80px;
+    z-index: 20;
+    float: left;
+    margin-left: 40px;
+    margin-top: 25px;
+}
+
 
 .btns input {
     width: 80px;
@@ -104,3 +125,4 @@ a:active {
     clear:both;
     height: 40px;
 }
+
