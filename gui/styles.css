@@ -33,7 +33,7 @@ a:active {
     box-shadow: 0 0 5px gray;
 }
 
-.file_panel{
+.vault_panel{
     display: block;
     position: fixed;
     top: 2.5%;
@@ -44,17 +44,29 @@ a:active {
     z-index: 10;
     border-radius: 10px;
     box-shadow: 0 0 5px gray;
+}
 
+.display_panel{
+    display: block;
+    position: fixed;
+    top: 20%;
+    left: 7%;
+    width: 86%;
+    height: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    z-index: 10;
+    border-radius: 10px;
+    box-shadow: 0 0 10px gray inset;
 }
 
 .item{
     display: block;
     width: 10%;
-    height: 12%;
+    height: 80px;
     z-index: 20;
     float: left;
     margin-left: 40px;
-    margin-bottom: 20px;
+    margin-top: 25px;
 }
 
 .btns input {
