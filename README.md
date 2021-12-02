@@ -11,6 +11,7 @@ sudo apt-get install nodejs npm
 cd gui
 npm install --save-dev electron@^8.5.5
 npm install --save electron-prompt
+npm install crypto --save
 ```
 
 > If you have encountered some installation problems caused by network connections, try following steps to complete the installation progress :)
