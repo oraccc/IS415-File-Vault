@@ -32,8 +32,15 @@ function show_dir(path) {
 
         if (arr[1] === 2) {
             path_tmp = path + arr[0] + "/";
-            html = html + "<div>dic: <a href=\"javascript:show_dir('" + path_tmp + "');\">" + arr[0] + "</a></div>";
+            html = html +
+                    "<div class='item' style='text-align:center;'> \
+                        <a  href=\"javascript:show_dir('" + path_tmp + "');\"> \
+                        <img src='./static/img/logos/logo_folder.png' width='100%'/>\
+                        <br>" + arr[0] + 
+                        "</a>\
+                    </div>";
         } else {
+            postfix = arr[0].split('.')[1];
             path_tmp = path + arr[0];
             html = html + "<div>file: <a href=\"javascript:show_content('" + path_tmp + "');\">" + arr[0] + "</a></div>";
         }
