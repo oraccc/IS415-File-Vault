@@ -7,6 +7,7 @@ var curren_path = rel_path;
 var list = document.getElementById("list");
 
 show_dir("/");
+update_dir_click();
 
 function show_dir(path) {
     let content = fs.readdirSync(root_path + path, { withFileTypes: true });
@@ -32,7 +33,7 @@ function show_dir(path) {
 
         if (arr[1] === 2) {
             path_tmp = path + arr[0] + "/";
-            html = html + "<div class='rightclick'>dic: <a href=\"javascript:show_dir('" + path_tmp + "');\">" + arr[0] + "</a></div>";
+            html = html + "<div class='dir' name='" + path_tmp + "'>dic: <a href=\"javascript:show_dir('" + path_tmp + "');\">" + arr[0] + "</a></div>";
         } else {
             path_tmp = path + arr[0];
             html = html + "<div>file: <a href=\"javascript:show_content('" + path_tmp + "');\">" + arr[0] + "</a></div>";
@@ -48,6 +49,7 @@ function show_dir(path) {
     }
 
     list.innerHTML = html;
+    update_dir_click();
 }
 
 function show_content(path) {
@@ -100,23 +102,69 @@ window.addEventListener('contextmenu', function (e) {
     m.popup({ window: remote.getCurrentWindow() });
 })
 
-var rigthTemplate1 = [
-    {
-        label: 'test',
-        click: function () {
-            console.log("hihihihihihi");
-        }
-    },
-];
+function update_dir_click() {
+    const { remote } = require('electron');
+    var dir = document.getElementsByClassName("dir");
 
-var m1 = remote.Menu.buildFromTemplate(rigthTemplate1);
+    for (let i = 0; i < dir.length; ++i) {
+        dir[i].oncontextmenu = function (event) {
+            event.stopPropagation();
+            var path_tmp = dir[i].getAttribute("name");
+            var rigthTemplate = [
+                {
+                    label: 'open',
+                    click: function () {
+                        show_dir(path_tmp);
+                    }
+                },
+                {
+                    label: 'delete',
+                    click: function () {
+                        fs.rmdir(root_path + path_tmp, { recursive: true }, function (error) {
+                            if (error) throw error;
+                            path_tmp = path_tmp.slice(0, path_tmp.length - 1);
+                            path_tmp = path_tmp.slice(0, path_tmp.lastIndexOf("/") + 1);
+                            show_dir(path_tmp);
+                        })
+                    }
+                },
+                {
+                    label: 'rename',
+                    click: function () {
+                        prompt({
+                            title: 'Rename Directory',
+                            label: 'New name: ',
+                            type: 'input'
+                        }).then((r) => {
+                            if (r !== null) {
+                                if (r.length === 0) {
+                                    alert('Please enter a new directory name!');
+                                } else {
+                                    var path_tmp1 = path_tmp;
+                                    path_tmp = path_tmp.slice(0, path_tmp.length - 1);
+                                    path_tmp = path_tmp.slice(0, path_tmp.lastIndexOf("/") + 1);
+                                    fs.rename(root_path + path_tmp1, root_path + path_tmp + r, function (error) {
+                                        if (error) throw error;
+                                        show_dir(path_tmp);
+                                    })
+                                }
+                            }
+                        }).catch(console.error);
+                    }
+                },
+            ];
 
-var test = document.getElementById("test");
+            var m = remote.Menu.buildFromTemplate(rigthTemplate);
+            m.popup({ window: remote.getCurrentWindow() });
+        };
+    }
+}
 
-test.addEventListener('contextmenu', event => {
-    // event.preventDefault();
-    event.stopPropagation();
-    console.log("hello");
-    m1.popup({ window: remote.getCurrentWindow() });
-    // if(event.preventDefault){event.preventDefault(); } else {event.returnValue = false; }
-});
+
+// test.addEventListener('contextmenu', event => {
+//     // event.preventDefault();
+//     event.stopPropagation();
+//     console.log("hello");
+//     m1.popup({ window: remote.getCurrentWindow() });
+//     // if(event.preventDefault){event.preventDefault(); } else {event.returnValue = false; }
+// });
