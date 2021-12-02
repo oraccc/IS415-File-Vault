@@ -11,7 +11,7 @@
 </head>
 
 <body background="./static/img/blur_background.jpg">
-    <div class="login_panel">
+    <div class="login_panel" style="height: 80%; top: 10%;">
         <div style="text-align: center;">
             <img src="./static/img/logo.png" width="250px"/>
         </div>
@@ -24,7 +24,10 @@
             <div class="gap-2"></div>
             <input style="width: 220px; height: 22px; border-radius: 1px; text-align: center; font-size: 16px;" type="password" id="set_password" placeholder="password">
         </div>
-        <div class="gap-30"></div>
+        <div style="text-align: center;color: darkslategrey; font-size:14px;font-weight: bolder;margin:auto 35px 0px;">
+            <p>* Your Password Will be Hashed and Stored in Our Database.</p>
+        </div>
+        <div class="gap-20"></div>
         <div class="btns" style="text-align: center;">
             <input type="button" onclick="set_password()" value="Set Password" style="width: 140px;">
         </div>

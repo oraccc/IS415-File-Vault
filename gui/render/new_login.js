@@ -1,8 +1,13 @@
 var fs = require('fs');
-
 var os = require('os');
+var my_crypto = require('crypto')
+
 var username = document.getElementById("name");
 username.value = os.userInfo().username;
+
+function md5(string) {
+    return my_crypto.createHash('md5').update(String(string)).digest('hex')
+}
 
 function set_password() {
     var mysql = require('mysql');
@@ -16,7 +21,9 @@ function set_password() {
     connection.connect();
 
     var pwd = document.getElementById('set_password').value;
-    var sql = "insert into user (name, password) values (\"" + os.userInfo().username + "\", \"" + pwd + "\");";
+    var hashed_pwd = md5(pwd);
+
+    var sql = "insert into user (name, password) values (\"" + os.userInfo().username + "\", \"" + hashed_pwd + "\");";
     console.log(sql);
 
     connection.query(sql, function (error, results, fields) {
