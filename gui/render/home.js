@@ -3,7 +3,7 @@ var os = require('os');
 
 var root_path = "/home/" + os.userInfo().username + "/vault";
 var rel_path = "/";
-var curren_path = rel_path;
+var current_path = rel_path;
 var list = document.getElementById("list");
 
 show_dir("/");
@@ -13,7 +13,7 @@ update_file_click();
 function show_dir(path) {
     let content = fs.readdirSync(root_path + path, { withFileTypes: true });
 
-    curren_path = path;
+    current_path = path;
 
     var html = "";
 
@@ -134,9 +134,9 @@ var rigthTemplate = [
                     if (r.length === 0) {
                         alert('Please enter a directory name!');
                     } else {
-                        fs.mkdir(root_path + curren_path + r, (error) => {
+                        fs.mkdir(root_path + current_path + r, (error) => {
                             if (error) throw error;
-                            show_dir(curren_path);
+                            show_dir(current_path);
                         });
                     }
                 }
@@ -154,18 +154,25 @@ var rigthTemplate = [
             }).then(result => {
 
                 var sourceFile = result.filePaths[0];
-                var filename = sourceFile.slice(sourceFile.lastIndexOf("/") + 1, sourceFile.length);
-                var destFile = root_path + curren_path + filename;
 
-                var readStream = fs.createReadStream(sourceFile);
-                var writeStream = fs.createWriteStream(destFile);
-                readStream.pipe(writeStream);
+                var filename = sourceFile.slice(sourceFile.lastIndexOf("/") + 1, sourceFile.length);
+                var destFile = root_path + current_path + filename;
+
+                if (sourceFile.includes(root_path)) {
+                    var readStream = fs.createReadStream(sourceFile);
+                    var writeStream = fs.createWriteStream(destFile);
+                    readStream.pipe(writeStream);
+                } else {
+                    // todo: encrypt!
+                    var readStream = fs.createReadStream(sourceFile);
+                    var writeStream = fs.createWriteStream(destFile);
+                    readStream.pipe(writeStream);
+                }
 
                 fs.unlink(sourceFile, (err) => {
                     if (err) throw e;
+                    show_dir(current_path);
                 })
-
-                show_dir(curren_path);
             }).catch(err => {
                 console.log(err);
             })
@@ -182,7 +189,7 @@ window.addEventListener('contextmenu', function (e) {
 
 function update_dir_click() {
     const { remote } = require('electron');
-    var dir = document.getElementsByClassName("item");
+    var dir = document.getElementsByClassName("item1");
 
     for (let i = 0; i < dir.length; ++i) {
         dir[i].oncontextmenu = function (event) {
@@ -241,7 +248,7 @@ function update_dir_click() {
 
 function update_file_click() {
     const { remote } = require('electron');
-    var file = document.getElementsByClassName("file");
+    var file = document.getElementsByClassName("item");
 
     for (let i = 0; i < file.length; ++i) {
         file[i].oncontextmenu = function (event) {
@@ -262,6 +269,38 @@ function update_file_click() {
                             path_tmp = path_tmp.slice(0, path_tmp.length - 1);
                             path_tmp = path_tmp.slice(0, path_tmp.lastIndexOf("/") + 1);
                             show_dir(path_tmp);
+                        })
+                    }
+                },
+                {
+                    label: 'move out file',
+                    click: function () {
+                        const { dialog } = require('electron').remote;
+
+                        dialog.showSaveDialog({
+                            title: 'move out file',
+                            defaultPath: path_tmp,
+                        }).then(result => {
+                            var sourceFile = root_path + path_tmp;
+                            var destFile = result.filePath;
+
+                            if (destFile.includes(root_path)) {
+                                var readStream = fs.createReadStream(sourceFile);
+                                var writeStream = fs.createWriteStream(destFile);
+                                readStream.pipe(writeStream);
+                            } else {
+                                // todo: decrypt!
+                                var readStream = fs.createReadStream(sourceFile);
+                                var writeStream = fs.createWriteStream(destFile);
+                                readStream.pipe(writeStream);
+                            }
+
+                            fs.unlink(sourceFile, (err) => {
+                                if (err) throw err;
+                                show_dir(current_path);
+                            })
+                        }).catch(err => {
+                            console.log(err);
                         })
                     }
                 },
