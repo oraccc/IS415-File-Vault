@@ -35,17 +35,17 @@ function show_dir(path) {
         if (arr[1] === 2) {
             path_tmp = path + arr[0] + "/";
             html = html +
-                    "<div class='item' name = '" + path_tmp + "'style='text-align:center;'> \
+                "<div class='item' name = '" + path_tmp + "'style='text-align:center;'> \
                             <a  href=\"javascript:show_dir('" + path_tmp + "');\"> \
                             <img src='./static/img/logos/logo_folder.png' width='100%'/>\
-                            <br>" + arr[0] + 
-                            "</a>\
+                            <br>" + arr[0] +
+                "</a>\
                     </div>";
 
         } else {
             postfix = arr[0].split('.')[1];
             var logo_name = ""
-            switch(postfix){
+            switch (postfix) {
                 case "txt": case "docx": case "doc":
                     logo_name = "docx";
                     break;
@@ -79,11 +79,11 @@ function show_dir(path) {
             };
             path_tmp = path + arr[0];
             html = html +
-            "<div class='item' name = '" + path_tmp + "'style='text-align:center;'> \
+                "<div class='item' name = '" + path_tmp + "'style='text-align:center;'> \
                     <a  href=\"javascript:show_content('" + path_tmp + "');\"> \
                     <img src='./static/img/logos/logo_" + logo_name + ".png' width='80%'/>\
-                    <br>" + arr[0] + 
-                    "</a>\
+                    <br>" + arr[0] +
+                "</a>\
             </div>";
             // html = html + "<div class='file' name='" + path_tmp +"'>file: <a href=\"javascript:show_content('" + path_tmp + "');\">" + arr[0] + "</a></div>";
         }
@@ -141,6 +141,34 @@ var rigthTemplate = [
                     }
                 }
             }).catch(console.error);
+        }
+    },
+    {
+        label: 'move in file',
+        click: function () {
+            const { dialog } = require('electron').remote;
+
+            dialog.showOpenDialog({
+                title: 'select a file',
+                defaultPath: '/home/' + os.userInfo().username,
+            }).then(result => {
+
+                var sourceFile = result.filePaths[0];
+                var filename = sourceFile.slice(sourceFile.lastIndexOf("/") + 1, sourceFile.length);
+                var destFile = root_path + curren_path + filename;
+
+                var readStream = fs.createReadStream(sourceFile);
+                var writeStream = fs.createWriteStream(destFile);
+                readStream.pipe(writeStream);
+
+                fs.unlink(sourceFile, (err) => {
+                    if (err) throw e;
+                })
+
+                show_dir(curren_path);
+            }).catch(err => {
+                console.log(err);
+            })
         }
     },
 ];
@@ -244,12 +272,3 @@ function update_file_click() {
         };
     }
 }
-
-
-// test.addEventListener('contextmenu', event => {
-//     // event.preventDefault();
-//     event.stopPropagation();
-//     console.log("hello");
-//     m1.popup({ window: remote.getCurrentWindow() });
-//     // if(event.preventDefault){event.preventDefault(); } else {event.returnValue = false; }
-// });
