@@ -48,9 +48,10 @@ function show_dir(path) {
 
         } 
         else {
+
             postfix = arr[0].split('.')[1];
             var logo_name = ""
-            switch(postfix){
+            switch (postfix) {
                 case "txt": case "docx": case "doc":
                     logo_name = "docx";
                     break;
@@ -145,13 +146,48 @@ var rigthTemplate = [
                     if (r.length === 0) {
                         alert('Please enter a directory name!');
                     } else {
-                        fs.mkdir(root_path + curren_path + r, (error) => {
+                        fs.mkdir(root_path + current_path + r, (error) => {
                             if (error) throw error;
-                            show_dir(curren_path);
+                            show_dir(current_path);
                         });
                     }
                 }
             }).catch(console.error);
+        }
+    },
+    {
+        label: 'move in file',
+        click: function () {
+            const { dialog } = require('electron').remote;
+
+            dialog.showOpenDialog({
+                title: 'select a file',
+                defaultPath: '/home/' + os.userInfo().username,
+            }).then(result => {
+
+                var sourceFile = result.filePaths[0];
+
+                var filename = sourceFile.slice(sourceFile.lastIndexOf("/") + 1, sourceFile.length);
+                var destFile = root_path + current_path + filename;
+
+                if (sourceFile.includes(root_path)) {
+                    var readStream = fs.createReadStream(sourceFile);
+                    var writeStream = fs.createWriteStream(destFile);
+                    readStream.pipe(writeStream);
+                } else {
+                    // todo: encrypt!
+                    var readStream = fs.createReadStream(sourceFile);
+                    var writeStream = fs.createWriteStream(destFile);
+                    readStream.pipe(writeStream);
+                }
+
+                fs.unlink(sourceFile, (err) => {
+                    if (err) throw e;
+                    show_dir(current_path);
+                })
+            }).catch(err => {
+                console.log(err);
+            })
         }
     },
 ];
@@ -165,7 +201,7 @@ window.addEventListener('contextmenu', function (e) {
 
 function update_dir_click() {
     const { remote } = require('electron');
-    var dir = document.getElementsByClassName("item");
+    var dir = document.getElementsByClassName("item1");
 
     for (let i = 0; i < dir.length; ++i) {
         dir[i].oncontextmenu = function (event) {
@@ -224,7 +260,7 @@ function update_dir_click() {
 
 function update_file_click() {
     const { remote } = require('electron');
-    var file = document.getElementsByClassName("file");
+    var file = document.getElementsByClassName("item");
 
     for (let i = 0; i < file.length; ++i) {
         file[i].oncontextmenu = function (event) {
@@ -248,6 +284,38 @@ function update_file_click() {
                         })
                     }
                 },
+                {
+                    label: 'move out file',
+                    click: function () {
+                        const { dialog } = require('electron').remote;
+
+                        dialog.showSaveDialog({
+                            title: 'move out file',
+                            defaultPath: path_tmp,
+                        }).then(result => {
+                            var sourceFile = root_path + path_tmp;
+                            var destFile = result.filePath;
+
+                            if (destFile.includes(root_path)) {
+                                var readStream = fs.createReadStream(sourceFile);
+                                var writeStream = fs.createWriteStream(destFile);
+                                readStream.pipe(writeStream);
+                            } else {
+                                // todo: decrypt!
+                                var readStream = fs.createReadStream(sourceFile);
+                                var writeStream = fs.createWriteStream(destFile);
+                                readStream.pipe(writeStream);
+                            }
+
+                            fs.unlink(sourceFile, (err) => {
+                                if (err) throw err;
+                                show_dir(current_path);
+                            })
+                        }).catch(err => {
+                            console.log(err);
+                        })
+                    }
+                },
             ];
 
             var m = remote.Menu.buildFromTemplate(rigthTemplate);
@@ -255,12 +323,3 @@ function update_file_click() {
         };
     }
 }
-
-
-// test.addEventListener('contextmenu', event => {
-//     // event.preventDefault();
-//     event.stopPropagation();
-//     console.log("hello");
-//     m1.popup({ window: remote.getCurrentWindow() });
-//     // if(event.preventDefault){event.preventDefault(); } else {event.returnValue = false; }
-// });
