@@ -5,6 +5,7 @@ var root_path = "/home/" + os.userInfo().username + "/vault";
 var rel_path = "/";
 var current_path = rel_path;
 var list = document.getElementById("list");
+var file_path = document.getElementById("file_path");
 
 show_dir("/");
 update_dir_click();
@@ -14,6 +15,12 @@ function show_dir(path) {
     let content = fs.readdirSync(root_path + path, { withFileTypes: true });
 
     current_path = path;
+    var path_html = "";
+    path_html = "<div style='margin-top:4px;margin-left:10px;'> \
+                <i class='fa fa-folder-open' style='color:rgb(29, 161, 242)'></i>" 
+                + root_path + current_path + 
+                "</div>";
+    file_path.innerHTML = path_html;
 
     var html = "";
 
@@ -34,7 +41,7 @@ function show_dir(path) {
         Reflect.ownKeys(v).forEach(function (name) {
             arr.push(v[name]);
         });
-        console.log(root_path + current_path);
+        
         if (arr[1] === 2) {
 
             path_tmp = path + arr[0] + "/";
@@ -99,7 +106,10 @@ function show_dir(path) {
         path = path.slice(0, path.length - 1);
         path = path.slice(0, path.lastIndexOf("/") + 1);
 
-        html = html + "<br><div><a href=\"javascript:show_dir('" + path + "');\">back</a></div>";
+        html = html + "<a style='font-size:20px;margin-left:570px;' href=\"javascript:show_dir('" + path + "');\">\
+                        <i class='fa fa-arrow-circle-left' style='font-size:30px;margin-bottom:30px;margin-top:30px;'></i>\
+                        Back\
+                      </a>";
     }
 
     list.innerHTML = html;
@@ -110,6 +120,14 @@ function show_dir(path) {
 function show_content(path) {
     const data = fs.readFileSync(root_path + path, 'utf8');
 
+    var path_html = "";
+    path_html = "<div style='margin-top:4px;margin-left:10px;'> \
+                <i class='fa fa-folder-open' style='color:rgb(29, 161, 242)'></i>" 
+                + root_path + path + 
+                "</div>";
+    file_path.innerHTML = path_html;
+    
+    
     var html = "<div style='text-align:center;margin-top:10px;color:dodgerblue;\
                font-weight:900;font-size:22px;'>FILE CONTENT</div><hr> \
                <div style='white-space:pre-line;color:rgb(54,54,54);text-align:left;margin:10px 30px 10px;font-weight:600;font-size:17px;'>" + data + 
@@ -122,12 +140,13 @@ function show_content(path) {
 
         html = html + "<hr>\
                       <a style='font-size:20px;margin-left:570px;' href=\"javascript:show_dir('" + path + "');\">\
-                      <i class='fa fa-arrow-circle-left' style='font-size:30px;margin-bottom:30px;'></i>\
-                      Back\
+                        <i class='fa fa-arrow-circle-left' style='font-size:30px;margin-bottom:30px;'></i>\
+                        Back\
                       </a>";
     }
 
     list.innerHTML = html;
+    
 }
 
 const { remote } = require('electron');
@@ -201,7 +220,7 @@ window.addEventListener('contextmenu', function (e) {
 
 function update_dir_click() {
     const { remote } = require('electron');
-    var dir = document.getElementsByClassName("item1");
+    var dir = document.getElementsByClassName("folder");
 
     for (let i = 0; i < dir.length; ++i) {
         dir[i].oncontextmenu = function (event) {
@@ -260,7 +279,7 @@ function update_dir_click() {
 
 function update_file_click() {
     const { remote } = require('electron');
-    var file = document.getElementsByClassName("item");
+    var file = document.getElementsByClassName("file");
 
     for (let i = 0; i < file.length; ++i) {
         file[i].oncontextmenu = function (event) {

@@ -28,7 +28,7 @@ app.on("ready", () => {
         },
     });
 
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 
     var sql = "select * from user where name = \"" + username + "\"";
 

@@ -64,9 +64,22 @@ a:active {
     width: 86%;
     height: 50%;
     background: rgba(255, 255, 255, 0.6);
-    z-index: 10;
+    z-index: 15;
     border-radius: 10px;
     box-shadow: 0 0 10px gray inset;
+}
+
+.path_panel{
+    display: block;
+    position: fixed;
+    top: 15.1%;
+    left: 7%;
+    width: 35%;
+    height: 4.5%;
+    background: rgba(226, 226, 226, 0.6);
+    z-index: 20;
+    border-radius: 5px;
+    box-shadow: 0 0 5px gray inset;
 }
 
 .folder{
