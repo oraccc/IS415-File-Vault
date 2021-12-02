@@ -50,7 +50,7 @@ a:active {
 .item{
     display: block;
     width: 10%;
-    height: 15%;
+    height: 12%;
     z-index: 20;
     float: left;
     margin-left: 40px;

@@ -35,7 +35,7 @@ function show_dir(path) {
         if (arr[1] === 2) {
             path_tmp = path + arr[0] + "/";
             html = html +
-                    "<div class='item' name = '"+path_tmp+"'style='text-align:center;'> \
+                    "<div class='item' name = '" + path_tmp + "'style='text-align:center;'> \
                             <a  href=\"javascript:show_dir('" + path_tmp + "');\"> \
                             <img src='./static/img/logos/logo_folder.png' width='100%'/>\
                             <br>" + arr[0] + 
@@ -44,8 +44,48 @@ function show_dir(path) {
 
         } else {
             postfix = arr[0].split('.')[1];
+            var logo_name = ""
+            switch(postfix){
+                case "txt": case "docx": case "doc":
+                    logo_name = "docx";
+                    break;
+                case "c": case "js": case "css": case "html":
+                    logo_name = "code";
+                    break;
+                case "mp3":
+                    logo_name = "mp3";
+                    break;
+                case "mp4":
+                    logo_name = "mp4";
+                    break;
+                case "jpg": case "png": case "svg": case "gif":
+                    logo_name = "png";
+                    break;
+                case "ppt": case "pptx":
+                    logo_name = "pptx";
+                    break;
+                case "csv": case "xls":
+                    logo_name = "xls";
+                    break;
+                case "pdf":
+                    logo_name = "pdf";
+                    break;
+                case "zip": case "rar": case "tar": case "7z":
+                    logo_name = "zip";
+                    break;
+                default:
+                    logo_name = "code";
+                    break;
+            };
             path_tmp = path + arr[0];
-            html = html + "<div class='file' name='" + path_tmp +"'>file: <a href=\"javascript:show_content('" + path_tmp + "');\">" + arr[0] + "</a></div>";
+            html = html +
+            "<div class='item' name = '" + path_tmp + "'style='text-align:center;'> \
+                    <a  href=\"javascript:show_content('" + path_tmp + "');\"> \
+                    <img src='./static/img/logos/logo_" + logo_name + ".png' width='80%'/>\
+                    <br>" + arr[0] + 
+                    "</a>\
+            </div>";
+            // html = html + "<div class='file' name='" + path_tmp +"'>file: <a href=\"javascript:show_content('" + path_tmp + "');\">" + arr[0] + "</a></div>";
         }
 
     });
