@@ -32,7 +32,7 @@ function show_dir(path) {
 
         if (arr[1] === 2) {
             path_tmp = path + arr[0] + "/";
-            html = html + "<div>dic: <a href=\"javascript:show_dir('" + path_tmp + "');\">" + arr[0] + "</a></div>";
+            html = html + "<div class='rightclick'>dic: <a href=\"javascript:show_dir('" + path_tmp + "');\">" + arr[0] + "</a></div>";
         } else {
             path_tmp = path + arr[0];
             html = html + "<div>file: <a href=\"javascript:show_content('" + path_tmp + "');\">" + arr[0] + "</a></div>";
@@ -82,7 +82,6 @@ var rigthTemplate = [
                     if (r.length === 0) {
                         alert('Please enter a directory name!');
                     } else {
-                        alert('Success' + r + "   " + r.length);
                         fs.mkdir(root_path + curren_path + r, (error) => {
                             if (error) throw error;
                             show_dir(curren_path);
@@ -100,3 +99,24 @@ window.addEventListener('contextmenu', function (e) {
     e.preventDefault();
     m.popup({ window: remote.getCurrentWindow() });
 })
+
+var rigthTemplate1 = [
+    {
+        label: 'test',
+        click: function () {
+            console.log("hihihihihihi");
+        }
+    },
+];
+
+var m1 = remote.Menu.buildFromTemplate(rigthTemplate1);
+
+var test = document.getElementById("test");
+
+test.addEventListener('contextmenu', event => {
+    // event.preventDefault();
+    event.stopPropagation();
+    console.log("hello");
+    m1.popup({ window: remote.getCurrentWindow() });
+    // if(event.preventDefault){event.preventDefault(); } else {event.returnValue = false; }
+});
