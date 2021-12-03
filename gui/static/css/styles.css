@@ -91,8 +91,17 @@ a:active {
     height: 70%;
     /* background: rgba(255, 255, 255, 0.6); */
     z-index: 15;
-    /* border-radius: 10px;
-    box-shadow: 0 0 10px gray inset; */
+}
+
+.record_panel{
+    display: block;
+    position: fixed;
+    top: 15%;
+    left: 51%;
+    width: 42%;
+    height: 70%;
+    /* background: rgba(255, 255, 255, 0.6); */
+    z-index: 15;
 }
 
 .path_panel{
