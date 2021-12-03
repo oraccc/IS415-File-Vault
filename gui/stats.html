@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="./static/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="./static/css/font-awesome.min.css">
+    <title>Encrypted File Vault System ~ Statistics Page</title>
+</head>
+
+<body background="./static/img/blur_background.jpg">
+    <div class="vault_panel" >
+        <h1 style="text-align: center; color: dimgray;" >Vault Statistics Page</h1>
+        <div class="stats_panel" style="overflow-x: auto">
+            <div class="usage_panel">
+                <div style="width:100%;height:100%;" id="pie-chart"></div>
+            </div>
+        </div>
+        <div class="home_panel">
+            <a href="home.html" title="Home Page">
+                <i class="fa fa-home" style="font-size: 36px;color: rgb(54,54,54);"></i>
+            </a>
+        </div>
+        <div class="pie_panel">
+            <a href="stats.html" title="Vault Statistics">
+                <i class="fa fa-bar-chart" style="font-size: 32px;color: rgb(54,54,54);"></i>
+            </a>
+        </div>
+        <div class="logout_panel">
+            <a href="login.html" title="Logout">
+                <i class="fa fa-sign-out" style="font-size: 36px;color: rgb(54,54,54);"></i>
+            </a>
+        </div>
+    </div>
+</body>
+
+
+<script src="./static/js/echarts.js"></script>
+
+<script type="text/javascript">
+    var chartDom = document.getElementById('pie-chart');
+    var myChart = echarts.init(chartDom);
+
+    var option;
+
+    option = {
+    title: {
+        text: 'Current Vault Usage',
+        left: 'center',
+        top:20,
+        textStyle:{
+            color:'#363636',
+            fontWeight:'bolder',
+            fontSize:20,
+        }
+        
+    },
+    tooltip: {
+        trigger: 'item',
+        formatter: function (params){
+            console.log(params);
+            return "Vault Usage: <br>" + "Category: " + params.name + 
+                   "<br> Size: " + params.value + " MB <br>" + 
+                   "Percent: "+ params.percent + " %";
+        }
+    },
+    legend: {
+        orient: 'horizontal',
+        x: 'center',
+        y: '330px',
+        textStyle:{
+            fontSize:14,
+            fontWeight:'bolder'
+        }
+    },
+    series: [
+        {
+        name: 'Vault Usage',
+        type: 'pie',
+        radius: '62%',
+        center:['50%','45%'],
+        startAngle: '90',
+        color: ['#10344A','#709198', '#83CFCF', '#44A9B1','#B5B5B5'],
+        data: [
+            { 
+                value: 1600, name: 'Docs', 
+                itemStyle: {shadowBlur: '10',shadowColor: 'rgba(0,0,0,0.8)',shadowOffsetY: '5'},
+            },
+            { 
+                value: 750, name: 'Archives', 
+                itemStyle: {shadowBlur: '10',shadowColor: 'rgba(0,0,0,0.8)',shadowOffsetY: '5'},
+            },
+            { 
+                value: 800, name: 'Videos',
+                itemStyle: {shadowBlur: '10',shadowColor: 'rgba(0,0,0,0.8)',shadowOffsetY: '5'},
+             },
+            { 
+                value: 900, name: 'Others',
+                itemStyle: {shadowBlur: '10',shadowColor: 'rgba(0,0,0,0.8)',shadowOffsetY: '5'},
+             },
+            { 
+                value: 1400, name: 'Unused',
+                itemStyle: {shadowBlur: '10',shadowColor: 'rgba(0,0,0,0.8)',shadowOffsetY: '5'},
+             },
+        ],
+        emphasis: {
+            itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+        },
+        label:{
+            textStyle:{
+                fontSize:14,
+                fontWeight:'bolder',
+            }
+        },
+        animationDuration: 2500,
+        animationEasing: "cubicInOut",
+        }
+    ]
+    };
+
+    option && myChart.setOption(option);
+</script>
+
+</html>

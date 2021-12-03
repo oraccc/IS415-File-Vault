@@ -4,7 +4,9 @@ var os = require('os');
 var root_path = "/home/" + os.userInfo().username + "/vault";
 var rel_path = "/";
 var current_path = rel_path;
+
 var list = document.getElementById("list");
+var back_button = document.getElementById("back_button");
 var file_path = document.getElementById("file_path");
 
 show_dir("/");
@@ -102,24 +104,36 @@ function show_dir(path) {
 
     });
 
+    var back_button_html = "";
     if (path !== rel_path) {
         path = path.slice(0, path.length - 1);
         path = path.slice(0, path.lastIndexOf("/") + 1);
-
-        html = html + "<a style='font-size:20px;margin-left:570px;' href=\"javascript:show_dir('" + path + "');\">\
-                        <i class='fa fa-arrow-circle-left' style='font-size:30px;margin-bottom:30px;margin-top:30px;'></i>\
-                        Back\
-                      </a>";
+        back_button_html = "<a style='font-size:20px;' href=\"javascript:show_dir('" + path + "');\">\
+                                <i class='fa fa-arrow-circle-left' style='font-size:30px;margin-bottom:30px'></i>\
+                                Back\
+                            </a>";
+        
     }
 
+    back_button.innerHTML = back_button_html;
     list.innerHTML = html;
     update_dir_click();
     update_file_click();
 }
 
 function show_content(path) {
-    const data = fs.readFileSync(root_path + path, 'utf8');
+    // const data = fs.readFileSync(root_path + path, 'utf8');
+    var postfix = path.split('.')[1];
+    var data = "";
 
+    switch (postfix){
+        case 'txt':case 'c':
+            data = fs.readFileSync(root_path + path, 'utf8');
+            break;
+        default:
+            data = fs.readFileSync(root_path + path, 'utf8');
+            break;
+    }
     var path_html = "";
     path_html = "<div style='margin-top:4px;margin-left:10px;'> \
                 <i class='fa fa-folder-open' style='color:rgb(29, 161, 242)'></i>" 
@@ -131,19 +145,20 @@ function show_content(path) {
     var html = "<div style='text-align:center;margin-top:10px;color:dodgerblue;\
                font-weight:900;font-size:22px;'>FILE CONTENT</div><hr> \
                <div style='white-space:pre-line;color:rgb(54,54,54);text-align:left;margin:10px 30px 10px;font-weight:600;font-size:17px;'>" + data + 
-               "</div>";
+               "</div><hr>\
+               <div class='gap-40'/>";
 
     list.innerHTML = html;
 
     if (path !== rel_path) {
         path = path.slice(0, path.lastIndexOf("/") + 1);
 
-        html = html + "<hr>\
-                      <a style='font-size:20px;margin-left:570px;' href=\"javascript:show_dir('" + path + "');\">\
+        var back_button_html = "<a style='font-size:20px' href=\"javascript:show_dir('" + path + "');\">\
                         <i class='fa fa-arrow-circle-left' style='font-size:30px;margin-bottom:30px;'></i>\
                         Back\
                       </a>";
     }
+    back_button.innerHTML = back_button_html;
 
     list.innerHTML = html;
     
