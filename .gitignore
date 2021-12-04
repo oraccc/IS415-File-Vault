@@ -50,6 +50,7 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+overload.o.ur-safe
 
 gui/node_modules/
 
