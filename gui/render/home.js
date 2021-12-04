@@ -1,7 +1,7 @@
 var fs = require('fs');
 var os = require('os');
 
-var root_path = "/home/" + os.userInfo().username + "/vault";
+var root_path = "/vault/" + os.userInfo().username;
 var rel_path = "/";
 var current_path = rel_path;
 

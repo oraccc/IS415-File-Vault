@@ -52,3 +52,5 @@ Mkfile.old
 dkms.conf
 
 gui/node_modules/
+
+gui/package-lock.json
