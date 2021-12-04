@@ -1,4 +1,7 @@
 var electron = require("electron");
+var ffi = require('ffi-napi');
+
+require("@electron/remote/main").initialize();
 
 var app = electron.app;
 var BrowserWindow = electron.BrowserWindow;
@@ -18,6 +21,12 @@ var connection = mysql.createConnection({
 connection.connect();
 
 app.on("ready", () => {
+
+    var libm = ffi.Library('./netlink/libnetlink', {
+        'send_pid': ['void', []]
+    });
+    libm.send_pid();
+
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
@@ -27,6 +36,9 @@ app.on("ready", () => {
             contextIsolation: false,
         },
     });
+
+
+    require("@electron/remote/main").enable(mainWindow.webContents);
 
     // mainWindow.webContents.openDevTools();
 

@@ -1,7 +1,7 @@
 var fs = require('fs');
 var os = require('os');
 
-var root_path = "/home/" + os.userInfo().username + "/vault";
+var root_path = "/vault/" + os.userInfo().username;
 var rel_path = "/";
 var current_path = rel_path;
 
@@ -19,9 +19,9 @@ function show_dir(path) {
     current_path = path;
     var path_html = "";
     path_html = "<div style='margin-top:4px;margin-left:10px;'> \
-                <i class='fa fa-folder-open' style='color:rgb(29, 161, 242)'></i>" 
-                + root_path + current_path + 
-                "</div>";
+                <i class='fa fa-folder-open' style='color:rgb(29, 161, 242)'></i>"
+        + root_path + current_path +
+        "</div>";
     file_path.innerHTML = path_html;
 
     var html = "";
@@ -43,7 +43,7 @@ function show_dir(path) {
         Reflect.ownKeys(v).forEach(function (name) {
             arr.push(v[name]);
         });
-        
+
         if (arr[1] === 2) {
 
             path_tmp = path + arr[0] + "/";
@@ -51,11 +51,11 @@ function show_dir(path) {
                 "<div class='folder' name = '" + path_tmp + "'style='text-align:center;'> \
                     <a  href=\"javascript:show_dir('" + path_tmp + "');\"> \
                         <img src='./static/img/logos/logo_folder.png' width='100%'/>\
-                        <br>" + arr[0] + 
-                    "</a>\
+                        <br>" + arr[0] +
+                "</a>\
                 </div>";
 
-        } 
+        }
         else {
 
             postfix = arr[0].split('.')[1];
@@ -97,8 +97,8 @@ function show_dir(path) {
                 "<div class='file' name = '" + path_tmp + "'style='text-align:center;'> \
                     <a  href=\"javascript:show_content('" + path_tmp + "');\"> \
                         <img src='./static/img/logos/logo_" + logo_name + ".png' width='80%'/>\
-                        <br>" + arr[0] + 
-                    "</a>\
+                        <br>" + arr[0] +
+                "</a>\
                 </div>";
         }
 
@@ -112,7 +112,7 @@ function show_dir(path) {
                                 <i class='fa fa-arrow-circle-left' style='font-size:30px;margin-bottom:30px'></i>\
                                 Back\
                             </a>";
-        
+
     }
 
     back_button.innerHTML = back_button_html;
@@ -126,8 +126,8 @@ function show_content(path) {
     var postfix = path.split('.')[1];
     var data = "";
 
-    switch (postfix){
-        case 'txt':case 'c':
+    switch (postfix) {
+        case 'txt': case 'c':
             data = fs.readFileSync(root_path + path, 'utf8');
             break;
         // case 'png':case 'jpg':
@@ -139,16 +139,16 @@ function show_content(path) {
     }
     var path_html = "";
     path_html = "<div style='margin-top:4px;margin-left:10px;'> \
-                <i class='fa fa-folder-open' style='color:rgb(29, 161, 242)'></i>" 
-                + root_path + path + 
-                "</div>";
+                <i class='fa fa-folder-open' style='color:rgb(29, 161, 242)'></i>"
+        + root_path + path +
+        "</div>";
     file_path.innerHTML = path_html;
-    
-    
+
+
     var html = "<div style='text-align:center;margin-top:10px;color:dodgerblue;\
                font-weight:900;font-size:22px;'>FILE CONTENT</div><hr> \
-               <div style='white-space:pre-line;color:rgb(54,54,54);text-align:left;margin:10px 30px 10px;font-weight:600;font-size:17px;'>" + data + 
-               "</div><hr>\
+               <div style='white-space:pre-line;color:rgb(54,54,54);text-align:left;margin:10px 30px 10px;font-weight:600;font-size:17px;'>" + data +
+        "</div><hr>\
                <div class='gap-40'/>";
 
     list.innerHTML = html;
@@ -164,10 +164,10 @@ function show_content(path) {
     back_button.innerHTML = back_button_html;
 
     list.innerHTML = html;
-    
+
 }
 
-const { remote } = require('electron');
+const remote = require("@electron/remote");
 const prompt = require('electron-prompt');
 
 var rigthTemplate = [
@@ -195,7 +195,7 @@ var rigthTemplate = [
     {
         label: 'move in file',
         click: function () {
-            const { dialog } = require('electron').remote;
+            const { dialog } = require("@electron/remote");
 
             dialog.showOpenDialog({
                 title: 'select a file',
@@ -207,16 +207,20 @@ var rigthTemplate = [
                 var filename = sourceFile.slice(sourceFile.lastIndexOf("/") + 1, sourceFile.length);
                 var destFile = root_path + current_path + filename;
 
-                if (sourceFile.includes(root_path)) {
-                    var readStream = fs.createReadStream(sourceFile);
-                    var writeStream = fs.createWriteStream(destFile);
-                    readStream.pipe(writeStream);
-                } else {
-                    // todo: encrypt!
-                    var readStream = fs.createReadStream(sourceFile);
-                    var writeStream = fs.createWriteStream(destFile);
-                    readStream.pipe(writeStream);
-                }
+                // if (sourceFile.includes(root_path)) {
+                //     var readStream = fs.createReadStream(sourceFile);
+                //     var writeStream = fs.createWriteStream(destFile);
+                //     readStream.pipe(writeStream);
+                // } else {
+                //     // todo: encrypt!
+                //     var readStream = fs.createReadStream(sourceFile);
+                //     var writeStream = fs.createWriteStream(destFile);
+                //     readStream.pipe(writeStream);
+                // }
+
+                fs.copyFile(sourceFile, destFile, (error) => {
+                    if (error) throw error;
+                });
 
                 fs.unlink(sourceFile, (err) => {
                     if (err) throw e;
@@ -237,7 +241,7 @@ window.addEventListener('contextmenu', function (e) {
 })
 
 function update_dir_click() {
-    const { remote } = require('electron');
+    const remote = require("@electron/remote");
     var dir = document.getElementsByClassName("folder");
 
     for (let i = 0; i < dir.length; ++i) {
@@ -296,7 +300,7 @@ function update_dir_click() {
 
 
 function update_file_click() {
-    const { remote } = require('electron');
+    const remote = require("@electron/remote");
     var file = document.getElementsByClassName("file");
 
     for (let i = 0; i < file.length; ++i) {
@@ -313,7 +317,7 @@ function update_file_click() {
                 {
                     label: 'delete',
                     click: function () {
-                        fs.rmdir(root_path + path_tmp, { recursive: true }, function (error) {
+                        fs.rm(root_path + path_tmp, { recursive: true }, function (error) {
                             if (error) throw error;
                             path_tmp = path_tmp.slice(0, path_tmp.length - 1);
                             path_tmp = path_tmp.slice(0, path_tmp.lastIndexOf("/") + 1);
@@ -324,7 +328,7 @@ function update_file_click() {
                 {
                     label: 'move out file',
                     click: function () {
-                        const { dialog } = require('electron').remote;
+                        const { dialog } = require("@electron/remote");
 
                         dialog.showSaveDialog({
                             title: 'move out file',
@@ -333,16 +337,20 @@ function update_file_click() {
                             var sourceFile = root_path + path_tmp;
                             var destFile = result.filePath;
 
-                            if (destFile.includes(root_path)) {
-                                var readStream = fs.createReadStream(sourceFile);
-                                var writeStream = fs.createWriteStream(destFile);
-                                readStream.pipe(writeStream);
-                            } else {
-                                // todo: decrypt!
-                                var readStream = fs.createReadStream(sourceFile);
-                                var writeStream = fs.createWriteStream(destFile);
-                                readStream.pipe(writeStream);
-                            }
+                            // if (destFile.includes(root_path)) {
+                            //     var readStream = fs.createReadStream(sourceFile);
+                            //     var writeStream = fs.createWriteStream(destFile);
+                            //     readStream.pipe(writeStream);
+                            // } else {
+                            //     // todo: decrypt!
+                            //     var readStream = fs.createReadStream(sourceFile);
+                            //     var writeStream = fs.createWriteStream(destFile);
+                            //     readStream.pipe(writeStream);
+                            // }
+
+                            fs.copyFile(sourceFile, destFile, (error) => {
+                                if (error) throw error;
+                            });
 
                             fs.unlink(sourceFile, (err) => {
                                 if (err) throw err;

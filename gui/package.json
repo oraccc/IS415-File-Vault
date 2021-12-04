@@ -10,11 +10,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^8.5.5"
+    "electron": "^16.0.2"
   },
   "dependencies": {
+    "@electron/remote": "^2.0.1",
     "crypto": "^1.0.1",
+    "echarts": "^5.2.2",
     "electron-prompt": "^1.7.0",
+    "ffi-napi": "^4.0.3",
     "mysql": "^2.18.1"
   }
 }
