@@ -130,6 +130,9 @@ function show_content(path) {
         case 'txt':case 'c':
             data = fs.readFileSync(root_path + path, 'utf8');
             break;
+        // case 'png':case 'jpg':
+        //     data = fs.readFileSyncz(root_path + path);
+        //     break;
         default:
             data = fs.readFileSync(root_path + path, 'utf8');
             break;
