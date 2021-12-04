@@ -48,3 +48,15 @@ void send_pid()
     // printf("Sending message to kernel\n");
     sendmsg(sock_fd, &msg, 0);
 }
+
+
+int send_msg()
+{
+    // socket
+    sock_fd = socket(PF_NETLINK, SOCK_RAW, NETLINK_SAFEBOX);
+    if (sock_fd < 0)
+        return -1;
+    send_pid();
+
+    return 0;
+}

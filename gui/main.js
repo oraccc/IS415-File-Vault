@@ -1,5 +1,4 @@
 var electron = require("electron");
-var ffi = require('ffi-napi');
 
 require("@electron/remote/main").initialize();
 
@@ -22,11 +21,6 @@ connection.connect();
 
 app.on("ready", () => {
 
-    var libm = ffi.Library('./netlink/libnetlink', {
-        'send_pid': ['void', []]
-    });
-    libm.send_pid();
-
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
@@ -40,7 +34,7 @@ app.on("ready", () => {
 
     require("@electron/remote/main").enable(mainWindow.webContents);
 
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
     var sql = "select * from user where name = \"" + username + "\"";
 

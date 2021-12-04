@@ -130,6 +130,9 @@ function show_content(path) {
         case 'txt': case 'c':
             data = fs.readFileSync(root_path + path, 'utf8');
             break;
+        // case 'png':case 'jpg':
+        //     data = fs.readFileSyncz(root_path + path);
+        //     break;
         default:
             data = fs.readFileSync(root_path + path, 'utf8');
             break;
@@ -180,10 +183,8 @@ var rigthTemplate = [
                     if (r.length === 0) {
                         alert('Please enter a directory name!');
                     } else {
-                        fs.mkdir(root_path + current_path + r, (error) => {
-                            if (error) throw error;
-                            show_dir(current_path);
-                        });
+                        fs.mkdirSync(root_path + current_path + r);
+                        show_dir(current_path);
                     }
                 }
             }).catch(console.error);
@@ -215,14 +216,10 @@ var rigthTemplate = [
                 //     readStream.pipe(writeStream);
                 // }
 
-                fs.copyFile(sourceFile, destFile, (error) => {
-                    if (error) throw error;
-                });
+                fs.copyFileSync(sourceFile, destFile);
 
-                fs.unlink(sourceFile, (err) => {
-                    if (err) throw e;
-                    show_dir(current_path);
-                })
+                fs.unlinkSync(sourceFile)
+                show_dir(current_path);
             }).catch(err => {
                 console.log(err);
             })
@@ -255,12 +252,10 @@ function update_dir_click() {
                 {
                     label: 'delete',
                     click: function () {
-                        fs.rmdir(root_path + path_tmp, { recursive: true }, function (error) {
-                            if (error) throw error;
-                            path_tmp = path_tmp.slice(0, path_tmp.length - 1);
-                            path_tmp = path_tmp.slice(0, path_tmp.lastIndexOf("/") + 1);
-                            show_dir(path_tmp);
-                        })
+                        fs.rmdirSync(root_path + path_tmp, { recursive: true });
+                        path_tmp = path_tmp.slice(0, path_tmp.length - 1);
+                        path_tmp = path_tmp.slice(0, path_tmp.lastIndexOf("/") + 1);
+                        show_dir(path_tmp);
                     }
                 },
                 {
@@ -278,10 +273,8 @@ function update_dir_click() {
                                     var path_tmp1 = path_tmp;
                                     path_tmp = path_tmp.slice(0, path_tmp.length - 1);
                                     path_tmp = path_tmp.slice(0, path_tmp.lastIndexOf("/") + 1);
-                                    fs.rename(root_path + path_tmp1, root_path + path_tmp + r, function (error) {
-                                        if (error) throw error;
-                                        show_dir(path_tmp);
-                                    })
+                                    fs.renameSync(root_path + path_tmp1, root_path + path_tmp + r);
+                                    show_dir(path_tmp);
                                 }
                             }
                         }).catch(console.error);
@@ -314,12 +307,10 @@ function update_file_click() {
                 {
                     label: 'delete',
                     click: function () {
-                        fs.rm(root_path + path_tmp, { recursive: true }, function (error) {
-                            if (error) throw error;
-                            path_tmp = path_tmp.slice(0, path_tmp.length - 1);
-                            path_tmp = path_tmp.slice(0, path_tmp.lastIndexOf("/") + 1);
-                            show_dir(path_tmp);
-                        })
+                        fs.rmSync(root_path + path_tmp, { recursive: true });
+                        path_tmp = path_tmp.slice(0, path_tmp.length - 1);
+                        path_tmp = path_tmp.slice(0, path_tmp.lastIndexOf("/") + 1);
+                        show_dir(path_tmp);
                     }
                 },
                 {
@@ -345,14 +336,10 @@ function update_file_click() {
                             //     readStream.pipe(writeStream);
                             // }
 
-                            fs.copyFile(sourceFile, destFile, (error) => {
-                                if (error) throw error;
-                            });
+                            fs.copyFileSync(sourceFile, destFile);
 
-                            fs.unlink(sourceFile, (err) => {
-                                if (err) throw err;
-                                show_dir(current_path);
-                            })
+                            fs.unlinkSync(sourceFile);
+                            show_dir(current_path);
                         }).catch(err => {
                             console.log(err);
                         })
