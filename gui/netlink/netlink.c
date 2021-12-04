@@ -5,20 +5,16 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <linux/netlink.h>
-// CONSTANTS
-#define MAX_PAYLOAD 1024
-#define NETLINK_SAFEBOX 29
 
-// GLOBALS
 int sock_fd;
 struct msghdr msg;
 struct nlmsghdr *nlh = NULL;
 struct sockaddr_nl src_addr, dest_addr;
 struct iovec iov;
 
-static char delim[] = " ";
+#define MAX_PAYLOAD 1024
+#define NETLINK_VAULT 29
 
-// send pid to kernel
 void send_pid()
 {
     memset(&src_addr, 0, sizeof(src_addr));
@@ -28,10 +24,9 @@ void send_pid()
 
     memset(&dest_addr, 0, sizeof(dest_addr));
     dest_addr.nl_family = AF_NETLINK;
-    dest_addr.nl_pid = 0; // for linux kernel
+    dest_addr.nl_pid = 0;
     dest_addr.nl_groups = 0;
 
-    // netlink message header
     nlh = (struct nlmsghdr*)malloc(NLMSG_SPACE(MAX_PAYLOAD));
     memset(nlh, 0, NLMSG_SPACE(MAX_PAYLOAD));
     nlh->nlmsg_len = NLMSG_SPACE(MAX_PAYLOAD);
@@ -45,17 +40,16 @@ void send_pid()
     msg.msg_iov = &iov;
     msg.msg_iovlen = 1;
 
-    // printf("Sending message to kernel\n");
     sendmsg(sock_fd, &msg, 0);
 }
 
 
 int send_msg()
 {
-    // socket
-    sock_fd = socket(PF_NETLINK, SOCK_RAW, NETLINK_SAFEBOX);
+    sock_fd = socket(PF_NETLINK, SOCK_RAW, NETLINK_VAULT);
     if (sock_fd < 0)
         return -1;
+
     send_pid();
 
     return 0;
