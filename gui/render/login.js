@@ -35,7 +35,6 @@ function login() {
     connection.query(sql, function (error, results, fields) {
         if (error) throw error;
 
-        console.log(results[0]["password"]);
         if (results[0]["password"] === hashed_pwd) {
             window.location.href = "home.html";
         } else {

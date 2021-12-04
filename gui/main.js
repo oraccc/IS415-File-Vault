@@ -31,7 +31,6 @@ app.on("ready", () => {
         },
     });
 
-
     require("@electron/remote/main").enable(mainWindow.webContents);
 
     mainWindow.webContents.openDevTools();
@@ -44,7 +43,7 @@ app.on("ready", () => {
         if (results.length !== 0) {
             mainWindow.loadFile("login.html");
         } else {
-            mainWindow.loadFile("new_login.html");
+            mainWindow.loadFile("register.html");
         }
     });
 

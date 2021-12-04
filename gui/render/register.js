@@ -24,7 +24,6 @@ function set_password() {
     var hashed_pwd = md5(pwd);
 
     var sql = "insert into user (name, password) values (\"" + os.userInfo().username + "\", \"" + hashed_pwd + "\");";
-    console.log(sql);
 
     connection.query(sql, function (error, results, fields) {
         if (error) throw error;

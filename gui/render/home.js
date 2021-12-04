@@ -199,7 +199,7 @@ var rigthTemplate = [
                 title: 'select a file',
                 defaultPath: '/home/' + os.userInfo().username,
             }).then(result => {
-
+                // ============================ todo ============================
                 var sourceFile = result.filePaths[0];
 
                 var filename = sourceFile.slice(sourceFile.lastIndexOf("/") + 1, sourceFile.length);
@@ -301,6 +301,8 @@ function update_file_click() {
                 {
                     label: 'open',
                     click: function () {
+                        // ============================ todo ============================
+
                         show_content(path_tmp);
                     }
                 },
@@ -322,6 +324,8 @@ function update_file_click() {
                             title: 'move out file',
                             defaultPath: path_tmp,
                         }).then(result => {
+                            // ============================ todo ============================
+
                             var sourceFile = root_path + path_tmp;
                             var destFile = result.filePath;
 
@@ -378,6 +382,8 @@ dropzone.addEventListener("drop", function (event) {
     var path_tmp = sourceFile.slice(sourceFile.lastIndexOf("/") + 1, sourceFile.length);
     var destFile = root_path + current_path + path_tmp;
 
+    // ============================ todo ============================
+    
     fs.copyFileSync(sourceFile, destFile);
 
     fs.unlinkSync(sourceFile);

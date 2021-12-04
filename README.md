@@ -2,7 +2,7 @@
 
 ## Intall
 
-### precondition
+### Precondition
 
 Make sure your [node.js](https://nodejs.org/en/) version is **v16.13.1**, and you can update your node version through this [tutorial](https://www.html.cn/qa/node-js/10667.html).
 
