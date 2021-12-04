@@ -31,9 +31,7 @@ function set_password() {
 
         var path = "/vault/" + os.userInfo().username;
 
-        fs.mkdir(path, { recursive: true }, (err) => {
-            if (err) throw err;
-          });
+        fs.mkdirSync(path, { recursive: true });
 
         window.location.href = "home.html";
     });

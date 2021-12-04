@@ -22,10 +22,14 @@ connection.connect();
 
 app.on("ready", () => {
 
-    var libm = ffi.Library('./netlink/libnetlink', {
-        'send_pid': ['void', []]
-    });
-    libm.send_pid();
+    // var libm = ffi.Library('./netlink/libnetlink', {
+    //     'send_msg': ['int', []]
+    // });
+    // var ret = libm.send_msg();
+    // if (ret === -1) {
+    //     console.log("netlink failed to send pid");
+    //     return;
+    // }
 
     mainWindow = new BrowserWindow({
         width: 800,
@@ -40,7 +44,7 @@ app.on("ready", () => {
 
     require("@electron/remote/main").enable(mainWindow.webContents);
 
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
     var sql = "select * from user where name = \"" + username + "\"";
 
