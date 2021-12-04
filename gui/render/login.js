@@ -1,6 +1,15 @@
 var os = require('os');
 var my_crypto = require('crypto')
 
+var ffi = require('ffi-napi');
+var libm = ffi.Library('./netlink/libnetlink', {
+    'send_msg': ['int', []]
+});
+var ret = libm.send_msg();
+if (ret === -1) {
+    console.log("netlink failed to send pid");
+}
+
 var username = document.getElementById("name");
 username.value = os.userInfo().username;
 

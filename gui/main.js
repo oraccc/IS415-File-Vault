@@ -1,5 +1,4 @@
 var electron = require("electron");
-var ffi = require('ffi-napi');
 
 require("@electron/remote/main").initialize();
 
@@ -21,15 +20,6 @@ var connection = mysql.createConnection({
 connection.connect();
 
 app.on("ready", () => {
-
-    // var libm = ffi.Library('./netlink/libnetlink', {
-    //     'send_msg': ['int', []]
-    // });
-    // var ret = libm.send_msg();
-    // if (ret === -1) {
-    //     console.log("netlink failed to send pid");
-    //     return;
-    // }
 
     mainWindow = new BrowserWindow({
         width: 800,

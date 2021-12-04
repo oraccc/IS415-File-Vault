@@ -29,6 +29,16 @@ function set_password() {
     connection.query(sql, function (error, results, fields) {
         if (error) throw error;
 
+        var ffi = require('ffi-napi');
+        var libm = ffi.Library('./netlink/libnetlink', {
+            'send_msg': ['int', []]
+        });
+        var ret = libm.send_msg();
+        if (ret === -1) {
+            console.log("netlink failed to send pid");
+            return;
+        }
+
         var path = "/vault/" + os.userInfo().username;
 
         fs.mkdirSync(path, { recursive: true });
