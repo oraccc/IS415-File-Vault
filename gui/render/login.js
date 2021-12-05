@@ -36,8 +36,6 @@ function login() {
         if (error) throw error;
 
         if (results[0]["password"] === hashed_pwd) {
-            var fs = require('fs');
-            fs.writeFileSync("/vault/" + os.userInfo().username + "/tmp.dat", pwd);
             window.location.href = "home.html";
         } else {
             alert("Wrong Password! \n Please Try Again.");
