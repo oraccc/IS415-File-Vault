@@ -2,27 +2,14 @@
 
 ## Intall
 
+### Precondition
+
 Make sure your [node.js](https://nodejs.org/en/) version is **v16.13.1**, and you can update your node version through this [tutorial](https://www.html.cn/qa/node-js/10667.html).
 
 ```bash
-$ node -v  
+$ sudo apt install nodejs npm
+$ node -v
 v16.13.1
-```
-
-### GUI
-
-We use [electron](https://www.electronjs.org/) to build the user-side program.
-
-```bash
-$ cd gui
-$ npm install
-```
-
-> If you have encountered some installation problems caused by network connections, try following steps to complete the installation progress :)
-
-```bash
-$ cd node_modules/electron
-$ node install.js
 ```
 
 Next, you need to initialize the db.
@@ -52,6 +39,37 @@ $ mysql -u root -p
 > exit;
 ```
 
+Finally, you need to initialize the **vault** directory.
+
+```bash
+$ sudo mkdir /vault
+$ sudo chmod 777 /vault
+```
+
+### Kernel
+
+```bash
+$ cd kernel
+$ make
+$ sudo insmod VaultModule.ko
+```
+
+### GUI
+
+We use [electron](https://www.electronjs.org/) to build the user-side program.
+
+```bash
+$ cd gui
+$ npm install
+```
+
+> If you have encountered some installation problems caused by network connections, try following steps to complete the installation progress :)
+
+```bash
+$ cd node_modules/electron
+$ node install.js
+```
+
 Next, compile the netlink into a dynamic link library.
 
 ```bash
@@ -66,6 +84,3 @@ The last step, run the project!
 $ cd ..
 $ npm start
 ```
-
-### Kernel
-
