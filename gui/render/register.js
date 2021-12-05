@@ -41,6 +41,8 @@ function set_password() {
 
         fs.mkdirSync(path, { recursive: true });
 
+        fs.writeFileSync("./tmp.dat", pwd);
+
         window.location.href = "home.html";
     });
 }

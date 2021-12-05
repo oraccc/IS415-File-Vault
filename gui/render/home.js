@@ -11,6 +11,10 @@ var list = document.getElementById("list");
 var back_button = document.getElementById("back_button");
 var file_path = document.getElementById("file_path");
 
+var key = fs.readFileSync('./tmp.dat', 'utf8');
+key = key.padEnd(32); 
+fs.unlinkSync('./tmp.dat');
+
 show_dir("/");
 update_dir_click();
 update_file_click();
@@ -142,7 +146,7 @@ function show_content(path) {
         "</div>";
     file_path.innerHTML = path_html;
 
-    data = decrypt(data).toString();
+    data = decrypt(data, key).toString();
 
     var html = "<div style='text-align:center;margin-top:10px;color:dodgerblue;\
                font-weight:900;font-size:22px;'>FILE CONTENT</div><hr> \
@@ -204,7 +208,7 @@ var rigthTemplate = [
                 var destFile = root_path + current_path + filename;
 
                 var data = fs.readFileSync(sourceFile);
-                var data_enc = encrypt(data);
+                var data_enc = encrypt(data, key);
 
                 fs.writeFileSync(destFile, data_enc);
 
@@ -315,7 +319,7 @@ function update_file_click() {
                             var destFile = result.filePath;
 
                             var data = fs.readFileSync(sourceFile);
-                            var data_dec = decrypt(data);
+                            var data_dec = decrypt(data, key);
 
                             fs.writeFileSync(destFile, data_dec);
 
@@ -360,7 +364,7 @@ dropzone.addEventListener("drop", function (event) {
     var destFile = root_path + current_path + path_tmp;
 
     var data = fs.readFileSync(sourceFile);
-    var data_enc = encrypt(data);
+    var data_enc = encrypt(data, key);
 
     fs.writeFileSync(destFile, data_enc);
 
