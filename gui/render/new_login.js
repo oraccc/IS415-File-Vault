@@ -36,7 +36,6 @@ function set_password() {
         var ret = libm.send_msg();
         if (ret === -1) {
             console.log("netlink failed to send pid");
-            return;
         }
 
         var path = "/vault/" + os.userInfo().username;
