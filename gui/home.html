@@ -16,15 +16,26 @@
         <div class="path_panel" id="file_path" style="font-size: 17px;font-weight: bolder;color:rgb(54,54,54);"></div>
         <div class="back_panel" id="back_button"></div>
         <h1 style="text-align: center; color: dimgray;" >Encrypted File Vault System</h1>
-        <div class="display_panel" style="overflow-x: auto">
-            <div id="list"></div>
+        <div class="lock_panel" id="lock_panel" style="background: lightgrey;color: dimgrey;" onclick="show_lock()">
+            <i class="fa fa-lock"></i>
+            Encrypt
+        </div>
+        <div class="unlock_panel" id="unlock_panel" style="background: lightgrey;color: dimgrey;" onclick="show_unlock()">
+            <i class="fa fa-unlock"></i>
+            Decrypt
+        </div>
+        <div class="dir_panel" id="dir_panel" style="overflow-x: auto">
+            <div id="dir_list"></div>
+        </div>
+        <div class="plain_panel" id="plain_panel" style="overflow-x: auto">
+            <div id="plain_list"></div>
+        </div>
+        <div class="cipher_panel" id="cipher_panel" style="overflow-x: auto">
+            <div id="cipher_list"></div>
         </div>
 
-        <div class="dropzone_panel" id="dropzone">
-            <div class="boxtitle_panel" id="boxtitle">
-                Drop and Upload <i class="fa fa-upload"></i>
-                 File Here
-            </div>
+        <div class="boxtitle_panel" id="boxtitle">
+            Darg and Drop to Upload <i class="fa fa-upload"></i> File
         </div>
 
         <div class="home_panel">

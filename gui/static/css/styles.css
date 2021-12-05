@@ -56,13 +56,39 @@ a:active {
     box-shadow: 0 0 5px gray;
 }
 
-.display_panel{
+.dir_panel{
     display: block;
     position: fixed;
     top: 20%;
     left: 7%;
     width: 86%;
-    height: 50%;
+    height: 65%;
+    background: rgba(255, 255, 255, 0.6);
+    z-index: 15;
+    border-radius: 10px;
+    box-shadow: 0 0 10px gray inset;
+}
+
+.plain_panel{
+    display: block;
+    position: fixed;
+    top: 20%;
+    left: 7%;
+    width: 86%;
+    height: 65%;
+    background: rgba(255, 255, 255, 0.6);
+    z-index: 15;
+    border-radius: 10px;
+    box-shadow: 0 0 10px gray inset;
+}
+
+.cipher_panel{
+    display: block;
+    position: fixed;
+    top: 20%;
+    left: 7%;
+    width: 86%;
+    height: 65%;
     background: rgba(255, 255, 255, 0.6);
     z-index: 15;
     border-radius: 10px;
@@ -130,7 +156,7 @@ a:active {
 .back_panel{
     display: block;
     position: fixed;
-    top: 62%;
+    top: 77%;
     left: 79%;
     width: 80px;
     height: 50px;
@@ -177,7 +203,37 @@ a:active {
     z-index: 20;
 }
 
-.dropzone_panel{
+.lock_panel{
+    display: block;
+    position: fixed;
+    top: 15%;
+    left: 67%;
+    width: 90px;
+    height: 25px;
+    z-index: 20;
+    font-size: 17px;
+    text-align:center;
+    font-weight: bolder;
+    border-radius: 5px;
+    box-shadow: 0 0 5px gray;
+}
+
+.unlock_panel{
+    display: block;
+    position: fixed;
+    top: 15%;
+    left: 80%;
+    width: 90px;
+    height: 25px;
+    z-index: 20;
+    font-size: 17px;
+    text-align:center;
+    font-weight: bolder;
+    border-radius: 5px;
+    box-shadow: 0 0 5px gray;
+}
+
+/* .dropzone_panel{
     text-align: center;
     position: fixed;
     width: 450px;
@@ -189,17 +245,20 @@ a:active {
     border: 3px dashed gray;
     border-radius: 10px;
     box-shadow: 0 0 10px gray inset;
-}
+} */
 
 .boxtitle_panel{
-    display: table-cell;
-    vertical-align: middle;
+    position: fixed;
+    display: block;
     text-align: center;
     font-size: 19px;
     font-weight: bolder;
     color: dimgrey;
-    width: 450px;
-    height: 120px;
+    top: 75%;
+    left: 33%;
+    width: 34%;
+    height: 15%;
+    z-index: 30;
 }
 
 .folder{

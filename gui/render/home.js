@@ -7,19 +7,39 @@ var root_path = "/vault/" + os.userInfo().username;
 var rel_path = "/";
 var current_path = rel_path;
 
-var list = document.getElementById("list");
+var dir_panel = document.getElementById("dir_panel");
+var plain_panel = document.getElementById("plain_panel");
+var cipher_panel = document.getElementById("cipher_panel");
+
+var dir_list = document.getElementById("dir_list");
+var plain_list = document.getElementById("plain_list");
+var cipher_list = document.getElementById("cipher_list");
+
+var lock_panel = document.getElementById("lock_panel");
+var unlock_panel = document.getElementById("unlock_panel");
+
+var box_title = document.getElementById("boxtitle");
 var back_button = document.getElementById("back_button");
 var file_path = document.getElementById("file_path");
 
 var key = fs.readFileSync("/vault/" + os.userInfo().username + "/tmp.dat", 'utf8');
 key = key.padEnd(32);
-fs.unlinkSync("/vault/" + os.userInfo().username + "/tmp.dat");
+// fs.unlinkSync("/vault/" + os.userInfo().username + "/tmp.dat");
 
 show_dir("/");
 update_dir_click();
 update_file_click();
 
 function show_dir(path) {
+    dir_panel.style.display = "block";
+    plain_panel.style.display = "none";
+    cipher_panel.style.display = "none";
+
+    box_title.style.display = "block";
+
+    lock_panel.style.display = "none";
+    unlock_panel.style.display = "none";
+
     let content = fs.readdirSync(root_path + path, { withFileTypes: true });
 
     current_path = path;
@@ -122,12 +142,26 @@ function show_dir(path) {
     }
 
     back_button.innerHTML = back_button_html;
-    list.innerHTML = html;
+    dir_list.innerHTML = html;
     update_dir_click();
     update_file_click();
 }
 
 function show_content(path) {
+
+    dir_panel.style.display = "none";
+    plain_panel.style.display = "block";
+    cipher_panel.style.display = "none";
+
+    box_title.style.display = "none";
+
+    lock_panel.style.display = "block";
+    unlock_panel.style.display = "block";
+    lock_panel.style.background = "lightgrey";
+    lock_panel.style.color = "dimgrey";
+    unlock_panel.style.background = "gold";
+    unlock_panel.style.color = "black";
+
     var postfix = path.split('.')[1];
     var data = "";
 
@@ -142,36 +176,51 @@ function show_content(path) {
     var path_html = "";
     path_html = "<div style='margin-top:4px;margin-left:10px;'> \
                 <i class='fa fa-folder-open' style='color:rgb(29, 161, 242)'></i>"
-        + root_path + path +
-        "</div>";
+                + root_path + path +
+                "</div>";
     file_path.innerHTML = path_html;
+
+    cipher_data = Buffer.from(data).toString('base64');
+    cipher_data = subStr(cipher_data);
+    var cipher_html = 
+                "<div style='text-align:center;margin-top:10px;color:dodgerblue;\
+                font-weight:900;font-size:22px;'>FILE CONTENT</div><hr> \
+                    <div style='white-space:pre-line;color:rgb(54,54,54);text-align:left;width:300px;margin:10px 30px 10px;font-weight:600;font-size:17px;'>" 
+                    + cipher_data +
+                    "</div><hr>\
+                <div class='gap-40'/>";
+
+    cipher_list.innerHTML = cipher_html;
 
     data = decrypt(data, key).toString();
 
-    var html = "<div style='text-align:center;margin-top:10px;color:dodgerblue;\
-               font-weight:900;font-size:22px;'>FILE CONTENT</div><hr> \
-               <div style='white-space:pre-line;color:rgb(54,54,54);text-align:left;margin:10px 30px 10px;font-weight:600;font-size:17px;'>" + data +
-        "</div><hr>\
-               <div class='gap-40'/>";
+    var html =
+        "<div style='text-align:center;margin-top:10px;color:dodgerblue;\
+        font-weight:900;font-size:22px;'>FILE CONTENT</div><hr> \
+            <div style='white-space:pre-line;color:rgb(54,54,54);text-align:left;margin:10px 30px 10px;font-weight:600;font-size:17px;'>" + data +
+            "</div><hr>\
+        <div class='gap-40'/>";
 
-    list.innerHTML = html;
+    plain_list.innerHTML = html;
 
     if (path !== rel_path) {
         path = path.slice(0, path.lastIndexOf("/") + 1);
 
-        var back_button_html = "<a style='font-size:20px' href=\"javascript:show_dir('" + path + "');\">\
-                        <i class='fa fa-arrow-circle-left' style='font-size:30px;margin-bottom:30px;'></i>\
-                        Back\
-                      </a>";
+        var back_button_html =
+                            "<a style='font-size:20px' href=\"javascript:show_dir('" + path + "');\">\
+                                <i class='fa fa-arrow-circle-left' style='font-size:30px;margin-bottom:30px;'></i>\
+                                Back\
+                            </a>";
     }
     back_button.innerHTML = back_button_html;
 
-    list.innerHTML = html;
+    plain_list.innerHTML = html;
 
 }
 
 const remote = require("@electron/remote");
 const prompt = require('electron-prompt');
+const { color } = require('echarts');
 
 var rigthTemplate = [
     {
@@ -338,7 +387,17 @@ function update_file_click() {
     }
 }
 
-let dropzone = document.getElementById("dropzone");
+function subStr (str){
+    let newstr = "";
+    if(str.length > 60) {
+        newstr = str.slice(0, 60) + "<br>";
+        return newstr + subStr(str.slice(60));
+    } else {
+        return str
+    }
+}
+
+let dropzone = dir_panel;
 
 dropzone.addEventListener("dragover", function (event) {
     event.preventDefault();
@@ -372,3 +431,27 @@ dropzone.addEventListener("drop", function (event) {
     show_dir(current_path);
 
 }, false);
+
+function show_lock (){
+    dir_panel.style.display = "none";
+    plain_panel.style.display = "none";
+    cipher_panel.style.display = "block";
+
+
+    unlock_panel.style.background = "lightgrey";
+    unlock_panel.style.color = "dimgrey";
+    lock_panel.style.background = "gold";
+    lock_panel.style.color = "black";
+}
+
+function show_unlock (){
+    dir_panel.style.display = "none";
+    plain_panel.style.display = "block";
+    cipher_panel.style.display = "none";
+
+
+    lock_panel.style.background = "lightgrey";
+    lock_panel.style.color = "dimgrey";
+    unlock_panel.style.background = "gold";
+    unlock_panel.style.color = "black";
+}
