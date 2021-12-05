@@ -1,6 +1,8 @@
 var fs = require('fs');
 var os = require('os');
 
+const { encrypt, decrypt } = require('./render/key');
+
 var root_path = "/vault/" + os.userInfo().username;
 var rel_path = "/";
 var current_path = rel_path;
@@ -122,19 +124,15 @@ function show_dir(path) {
 }
 
 function show_content(path) {
-    // const data = fs.readFileSync(root_path + path, 'utf8');
     var postfix = path.split('.')[1];
     var data = "";
 
     switch (postfix) {
         case 'txt': case 'c':
-            data = fs.readFileSync(root_path + path, 'utf8');
+            data = fs.readFileSync(root_path + path);
             break;
-        // case 'png':case 'jpg':
-        //     data = fs.readFileSyncz(root_path + path);
-        //     break;
         default:
-            data = fs.readFileSync(root_path + path, 'utf8');
+            data = fs.readFileSync(root_path + path);
             break;
     }
     var path_html = "";
@@ -144,6 +142,7 @@ function show_content(path) {
         "</div>";
     file_path.innerHTML = path_html;
 
+    data = decrypt(data).toString();
 
     var html = "<div style='text-align:center;margin-top:10px;color:dodgerblue;\
                font-weight:900;font-size:22px;'>FILE CONTENT</div><hr> \
@@ -199,24 +198,15 @@ var rigthTemplate = [
                 title: 'select a file',
                 defaultPath: '/home/' + os.userInfo().username,
             }).then(result => {
-                // ============================ todo ============================
                 var sourceFile = result.filePaths[0];
 
                 var filename = sourceFile.slice(sourceFile.lastIndexOf("/") + 1, sourceFile.length);
                 var destFile = root_path + current_path + filename;
 
-                // if (sourceFile.includes(root_path)) {
-                //     var readStream = fs.createReadStream(sourceFile);
-                //     var writeStream = fs.createWriteStream(destFile);
-                //     readStream.pipe(writeStream);
-                // } else {
-                //     // todo: encrypt!
-                //     var readStream = fs.createReadStream(sourceFile);
-                //     var writeStream = fs.createWriteStream(destFile);
-                //     readStream.pipe(writeStream);
-                // }
+                var data = fs.readFileSync(sourceFile);
+                var data_enc = encrypt(data);
 
-                fs.copyFileSync(sourceFile, destFile);
+                fs.writeFileSync(destFile, data_enc);
 
                 fs.unlinkSync(sourceFile)
                 show_dir(current_path);
@@ -288,7 +278,6 @@ function update_dir_click() {
     }
 }
 
-
 function update_file_click() {
     const remote = require("@electron/remote");
     var file = document.getElementsByClassName("file");
@@ -301,8 +290,6 @@ function update_file_click() {
                 {
                     label: 'open',
                     click: function () {
-                        // ============================ todo ============================
-
                         show_content(path_tmp);
                     }
                 },
@@ -324,23 +311,13 @@ function update_file_click() {
                             title: 'move out file',
                             defaultPath: path_tmp,
                         }).then(result => {
-                            // ============================ todo ============================
-
                             var sourceFile = root_path + path_tmp;
                             var destFile = result.filePath;
 
-                            // if (destFile.includes(root_path)) {
-                            //     var readStream = fs.createReadStream(sourceFile);
-                            //     var writeStream = fs.createWriteStream(destFile);
-                            //     readStream.pipe(writeStream);
-                            // } else {
-                            //     // todo: decrypt!
-                            //     var readStream = fs.createReadStream(sourceFile);
-                            //     var writeStream = fs.createWriteStream(destFile);
-                            //     readStream.pipe(writeStream);
-                            // }
+                            var data = fs.readFileSync(sourceFile);
+                            var data_dec = decrypt(data);
 
-                            fs.copyFileSync(sourceFile, destFile);
+                            fs.writeFileSync(destFile, data_dec);
 
                             fs.unlinkSync(sourceFile);
                             show_dir(current_path);
@@ -382,9 +359,10 @@ dropzone.addEventListener("drop", function (event) {
     var path_tmp = sourceFile.slice(sourceFile.lastIndexOf("/") + 1, sourceFile.length);
     var destFile = root_path + current_path + path_tmp;
 
-    // ============================ todo ============================
-    
-    fs.copyFileSync(sourceFile, destFile);
+    var data = fs.readFileSync(sourceFile);
+    var data_enc = encrypt(data);
+
+    fs.writeFileSync(destFile, data_enc);
 
     fs.unlinkSync(sourceFile);
     show_dir(current_path);
