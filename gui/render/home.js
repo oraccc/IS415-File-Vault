@@ -13,7 +13,6 @@ var file_path = document.getElementById("file_path");
 
 var key = fs.readFileSync("/vault/" + os.userInfo().username + "/tmp.dat", 'utf8');
 key = key.padEnd(32);
-fs.unlinkSync("/vault/" + os.userInfo().username + "/tmp.dat");
 
 show_dir("/");
 update_dir_click();
@@ -62,8 +61,7 @@ function show_dir(path) {
                 </div>";
 
         }
-        else {
-
+        else if (arr[0] != 'tmp.dat') {
             postfix = arr[0].split('.')[1];
             var logo_name = ""
             switch (postfix) {
