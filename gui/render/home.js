@@ -25,9 +25,6 @@ var file_path = document.getElementById("file_path");
 var key = fs.readFileSync("/vault/" + os.userInfo().username + "/tmp.dat", 'utf8');
 key = key.padEnd(32);
 
-
-
-
 show_dir("/");
 update_dir_click();
 update_file_click();
@@ -177,18 +174,18 @@ function show_content(path) {
     var path_html = "";
     path_html = "<div style='margin-top:4px;margin-left:10px;'> \
                 <i class='fa fa-folder-open' style='color:rgb(29, 161, 242)'></i>"
-                + root_path + path +
-                "</div>";
+        + root_path + path +
+        "</div>";
     file_path.innerHTML = path_html;
 
     cipher_data = Buffer.from(data).toString('base64');
     cipher_data = subStr(cipher_data);
-    var cipher_html = 
-                "<div style='text-align:center;margin-top:10px;color:dodgerblue;\
+    var cipher_html =
+        "<div style='text-align:center;margin-top:10px;color:dodgerblue;\
                 font-weight:900;font-size:22px;'>FILE CONTENT</div><hr> \
-                    <div style='white-space:pre-line;color:rgb(54,54,54);text-align:left;width:300px;margin:10px 30px 10px;font-weight:600;font-size:17px;'>" 
-                    + cipher_data +
-                    "</div><hr>\
+                    <div style='white-space:pre-line;color:rgb(54,54,54);text-align:left;width:300px;margin:10px 30px 10px;font-weight:600;font-size:17px;'>"
+        + cipher_data +
+        "</div><hr>\
                 <div class='gap-40'/>";
 
     cipher_list.innerHTML = cipher_html;
@@ -199,7 +196,7 @@ function show_content(path) {
         "<div style='text-align:center;margin-top:10px;color:dodgerblue;\
         font-weight:900;font-size:22px;'>FILE CONTENT</div><hr> \
             <div style='white-space:pre-line;color:rgb(54,54,54);text-align:left;margin:10px 30px 10px;font-weight:600;font-size:17px;'>" + data +
-            "</div><hr>\
+        "</div><hr>\
         <div class='gap-40'/>";
 
     plain_list.innerHTML = html;
@@ -208,7 +205,7 @@ function show_content(path) {
         path = path.slice(0, path.lastIndexOf("/") + 1);
 
         var back_button_html =
-                            "<a style='font-size:20px' href=\"javascript:show_dir('" + path + "');\">\
+            "<a style='font-size:20px' href=\"javascript:show_dir('" + path + "');\">\
                                 <i class='fa fa-arrow-circle-left' style='font-size:30px;margin-bottom:30px;'></i>\
                                 Back\
                             </a>";
@@ -388,9 +385,9 @@ function update_file_click() {
     }
 }
 
-function subStr (str){
+function subStr(str) {
     let newstr = "";
-    if(str.length > 60) {
+    if (str.length > 60) {
         newstr = str.slice(0, 60) + "<br>";
         return newstr + subStr(str.slice(60));
     } else {
@@ -433,7 +430,7 @@ dropzone.addEventListener("drop", function (event) {
 
 }, false);
 
-function show_lock (){
+function show_lock() {
     dir_panel.style.display = "none";
     plain_panel.style.display = "none";
     cipher_panel.style.display = "block";
@@ -445,7 +442,7 @@ function show_lock (){
     lock_panel.style.color = "black";
 }
 
-function show_unlock (){
+function show_unlock() {
     dir_panel.style.display = "none";
     plain_panel.style.display = "block";
     cipher_panel.style.display = "none";
