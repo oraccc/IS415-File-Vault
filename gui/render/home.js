@@ -11,9 +11,9 @@ var list = document.getElementById("list");
 var back_button = document.getElementById("back_button");
 var file_path = document.getElementById("file_path");
 
-var key = fs.readFileSync('./tmp.dat', 'utf8');
-key = key.padEnd(32); 
-fs.unlinkSync('./tmp.dat');
+var key = fs.readFileSync("/vault/" + os.userInfo().username + "/tmp.dat", 'utf8');
+key = key.padEnd(32);
+fs.unlinkSync("/vault/" + os.userInfo().username + "/tmp.dat");
 
 show_dir("/");
 update_dir_click();
