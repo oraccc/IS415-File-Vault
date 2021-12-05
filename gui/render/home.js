@@ -171,7 +171,7 @@ const prompt = require('electron-prompt');
 
 var rigthTemplate = [
     {
-        label: 'create new directory',
+        label: 'Create New Directory',
         click: function () {
             prompt({
                 title: 'Create New Directory',
@@ -190,7 +190,7 @@ var rigthTemplate = [
         }
     },
     {
-        label: 'move in file',
+        label: 'Move In File',
         click: function () {
             const { dialog } = require("@electron/remote");
 
@@ -234,13 +234,13 @@ function update_dir_click() {
             var path_tmp = dir[i].getAttribute("name");
             var rigthTemplate = [
                 {
-                    label: 'open',
+                    label: 'Open',
                     click: function () {
                         show_dir(path_tmp);
                     }
                 },
                 {
-                    label: 'delete',
+                    label: 'Delete',
                     click: function () {
                         fs.rmdirSync(root_path + path_tmp, { recursive: true });
                         path_tmp = path_tmp.slice(0, path_tmp.length - 1);
@@ -249,7 +249,7 @@ function update_dir_click() {
                     }
                 },
                 {
-                    label: 'rename',
+                    label: 'Rename',
                     click: function () {
                         prompt({
                             title: 'Rename Directory',
@@ -288,13 +288,13 @@ function update_file_click() {
             var path_tmp = file[i].getAttribute("name");
             var rigthTemplate = [
                 {
-                    label: 'open',
+                    label: 'Open',
                     click: function () {
                         show_content(path_tmp);
                     }
                 },
                 {
-                    label: 'delete',
+                    label: 'Delete',
                     click: function () {
                         fs.rmSync(root_path + path_tmp, { recursive: true });
                         path_tmp = path_tmp.slice(0, path_tmp.length - 1);
@@ -303,7 +303,7 @@ function update_file_click() {
                     }
                 },
                 {
-                    label: 'move out file',
+                    label: 'Move Out File',
                     click: function () {
                         const { dialog } = require("@electron/remote");
 
