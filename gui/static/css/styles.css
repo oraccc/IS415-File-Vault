@@ -1,6 +1,6 @@
 hr {
     margin-top:7px;
-    *margin: 0;
+
     border: 0;
     color: rgb(4, 0, 235);
     background-color: rgb(29, 161, 242);
@@ -89,7 +89,6 @@ a:active {
     left: 7%;
     width: 42%;
     height: 70%;
-    /* background: rgba(255, 255, 255, 0.6); */
     z-index: 15;
 }
 
@@ -100,10 +99,21 @@ a:active {
     left: 51%;
     width: 42%;
     height: 70%;
-    /* background: rgba(255, 255, 255, 0.6); */
     z-index: 15;
 }
 
+.info_panel{
+    display: block;
+    position: fixed;
+    top: 15%;
+    left: 9%;
+    width: 82%;
+    height: 70%;
+    background: rgba(255, 255, 255, 0.6);
+    z-index: 10;
+    border-radius: 10px;
+    box-shadow: 0 0 10px gray inset;
+}
 .path_panel{
     display: block;
     position: fixed;
@@ -151,6 +161,16 @@ a:active {
     display: block;
     position: fixed;
     top: 88.2%;
+    left: 70%;
+    width: 80px;
+    height: 50px;
+    z-index: 20;
+}
+
+.help_panel{
+    display: block;
+    position: fixed;
+    top: 88.2%;
     left: 76%;
     width: 80px;
     height: 50px;
@@ -160,23 +180,26 @@ a:active {
 .dropzone_panel{
     text-align: center;
     position: fixed;
-    width: 300px;
-    height: 100px;
-    top: 75%;
+    width: 450px;
+    height: 120px;
+    top: 72.5%;
     left: 7%;
-    border: 4px dashed red;
+    background: rgba(255, 255, 255, 0.6);
+    z-index: 15;
+    border: 3px dashed gray;
     border-radius: 10px;
-    z-index: 30;
+    box-shadow: 0 0 10px gray inset;
 }
 
-.boxtitle{
+.boxtitle_panel{
     display: table-cell;
     vertical-align: middle;
     text-align: center;
-    color: black;
-    font: bold 2em "Arial", sans-serif;
-    width: 300px;
-    height: 100px;
+    font-size: 19px;
+    font-weight: bolder;
+    color: dimgrey;
+    width: 450px;
+    height: 120px;
 }
 
 .folder{

@@ -33,7 +33,7 @@ app.on("ready", () => {
 
     require("@electron/remote/main").enable(mainWindow.webContents);
 
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 
     var sql = "select * from user where name = \"" + username + "\"";
 
