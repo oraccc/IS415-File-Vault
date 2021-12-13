@@ -89,4 +89,5 @@ $ npm start
 
 ## Enjoy it!
 
-<img width="60%" src="./gui/static/img/cover.png"/>
+<div align=center><img width="60%" style="margin: 0 auto;" src="./gui/static/img/cover.png"/></div>
+
