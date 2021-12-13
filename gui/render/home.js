@@ -88,7 +88,7 @@ function show_dir(path) {
                 case "txt": case "docx": case "doc":
                     logo_name = "docx";
                     break;
-                case "c": case "js": case "css": case "html":
+                case "c": case "js": case "css": case "html": case "rs":
                     logo_name = "code";
                     break;
                 case "mp3":

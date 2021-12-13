@@ -22,7 +22,10 @@ function fileDisplay(filePath) {
         var isFile = stats.isFile();
         var isDir = stats.isDirectory();
         if (isFile) {
-            file.push(filedir);
+            console.log(filedir)
+            if (filedir !== '/vault/emison/tmp.dat') {
+                file.push(filedir);
+            }
         }
         if (isDir) {
             fileDisplay(filedir);
@@ -53,7 +56,7 @@ file.forEach((name) => {
 
 option = {
     title: {
-        text: 'Current Vault Usage',
+        text: 'Current Vault Composition',
         left: 'center',
         top: 20,
         textStyle: {
@@ -68,7 +71,7 @@ option = {
         formatter: function (params) {
             console.log(params);
             return "Vault Usage: <br>" + "Category: " + params.name +
-                "<br> Size: " + params.value + " MB <br>" +
+                "<br> Size: " + params.value + " <br>" +
                 "Percent: " + params.percent + " %";
         }
     },
