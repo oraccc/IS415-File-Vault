@@ -1,6 +1,8 @@
 # fileVault
 
-## Intall
+This project implements an encrypted file vault, by function overloading for system calls.
+
+## Install
 
 ### Precondition
 
@@ -31,7 +33,7 @@ $ sudo mysql
 # restart the mysql server
 $ sudo /etc/init.d/mysql restart
 
-# initialize the content related to this project
+# initialize the db
 $ mysql -u root -p
 > create database test;
 > use test;
@@ -84,3 +86,7 @@ The last step, run the project!
 $ cd ..
 $ npm start
 ```
+
+## Enjoy it!
+
+<img width="60%" src="./gui/static/img/cover.png"/>
