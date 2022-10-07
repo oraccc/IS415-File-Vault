@@ -1,10 +1,12 @@
-# fileVault
+# IS415: 系统软件课程设计
 
-This project implements an encrypted file vault, by function overloading for system calls.
+### IS415：Course Design In System Software (File Vault)
 
-## Install
+This project implements an **encrypted file vault**, by function overloading for system calls.
 
-### Precondition
+### Install
+
+#### Precondition
 
 Make sure your [node.js](https://nodejs.org/en/) version is **v16.13.1**, and you can update your node version through this [tutorial](https://www.html.cn/qa/node-js/10667.html).
 
@@ -48,7 +50,7 @@ $ sudo mkdir /vault
 $ sudo chmod 777 /vault
 ```
 
-### Kernel
+#### Kernel
 
 ```bash
 $ cd kernel
@@ -56,7 +58,7 @@ $ make
 $ sudo insmod VaultModule.ko
 ```
 
-### GUI
+#### GUI
 
 We use [electron](https://www.electronjs.org/) to build the user-side program.
 
@@ -87,7 +89,7 @@ $ cd ..
 $ npm start
 ```
 
-## Enjoy it!
+### Enjoy it!
 
 <div align=center><img width="60%" style="margin: 0 auto;" src="./gui/static/img/cover.png"/></div>
 
